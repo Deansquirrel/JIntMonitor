@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC 
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" 
+	"http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+
+	<definition name="template-base" template="/layouts/base.jsp" />
+	<!-- <definition name="content-base" template="/layouts/main.jsp" /> -->
+<!-- 	
+	<definition name="testPage" extends="template-base">
+		<put-attribute name="content" value="/layouts/content.jsp" />
+	</definition>
+	
+	<definition name="pageNotFound" extends="template-base">
+		<put-attribute name="content" value="/WEB-INF/view/PageNotFound.jsp" />
+	</definition>
+	 -->
+	 
+	 <definition name="responsePage" extends="template-base">
+		<put-attribute name="content" value="/layouts/content.jsp" />
+	</definition>
+	 
+	<definition name="errorPage" extends="template-base">
+		<put-attribute name="content" value="/layouts/error.jsp" />
+	</definition>
+	
+	<!-- 
+	<definition name="nav" extends="template-base">
+		<put-attribute name="content" value="/WEB-INF/view/nav.jsp" />
+	</definition>
+	
+	<definition name="login" extends="template-base">
+		<put-attribute name="content" value="/WEB-INF/view/login.jsp" />
+	</definition>
+	
+	<definition name="home" extends="template-base">
+		<put-attribute name="content" value="/WEB-INF/view/home.jsp" />
+	</definition>
+	
+	<definition name="RecordAdd" extends="template-base">
+		<put-attribute name="content" value="/WEB-INF/view/Record/RecordAdd.jsp" />
+	</definition>
+	
+	<definition name="RecordShow" extends="template-base">
+		<put-attribute name="content" value="/WEB-INF/view/Record/RecordShow.jsp" />
+	</definition>
+	
+	<definition name="RecordModify" extends="template-base">
+		<put-attribute name="content" value="/WEB-INF/view/Record/RecordModify.jsp" />
+	</definition>
+	
+	<definition name="CategoryAdd" extends="template-base">
+		<put-attribute name="content" value="/WEB-INF/view/Category/CategoryAdd.jsp" />
+	</definition>
+	
+	<definition name="CategoryShow" extends="template-base">
+		<put-attribute name="content" value="/WEB-INF/view/Category/CategoryShow.jsp" />
+	</definition>
+	
+	<definition name="CategoryModify" extends="template-base">
+		<put-attribute name="content" value="/WEB-INF/view/Category/CategoryModify.jsp" />
+	</definition>
+	
+	<definition name="PageRuntimeException" extends="template-base">
+		<put-attribute name="content" value="/WEB-INF/view/ErrPage/PageRuntimeException.jsp" />
+	</definition>
+	
+	
+	 -->
+
+</tiles-definitions> 

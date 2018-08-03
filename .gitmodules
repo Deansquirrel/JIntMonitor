@@ -1,0 +1,3 @@
+[submodule "proj/src/main/java/com/yuansong/common"]
+	path = proj/src/main/java/com/yuansong/common
+	url = https://github.com/Deansquirrel/JWebCommon.git
