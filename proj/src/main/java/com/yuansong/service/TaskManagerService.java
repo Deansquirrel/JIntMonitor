@@ -11,14 +11,14 @@ import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TaskManager {
+public class TaskManagerService {
 	
 	@Autowired
     TaskScheduler scheduler;
 	
 	private Map<String, ScheduledFuture<?>> list;
 	
-	public TaskManager() {
+	public TaskManagerService() {
 		list = new HashMap<String, ScheduledFuture<?>>();
 	}
 	

@@ -20,6 +20,7 @@ public class TestTask {
 	public TestTask() {
 		logger.info("Scheduled TestTask Init  - " + DateTool.getDateStr());
 	}
+
 	
 //	@Scheduled(cron = "0 0/1 * * * ?")
 //	public void checkStart() {

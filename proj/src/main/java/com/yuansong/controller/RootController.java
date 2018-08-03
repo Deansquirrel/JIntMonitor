@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.yuansong.common.CommonFun;
-import com.yuansong.service.TaskManager;
+import com.yuansong.service.TaskManagerService;
 import com.yuansong.taskjob.TestJob;
 
 @Controller
@@ -25,7 +25,7 @@ public class RootController {
 	private String taskId;
 	
 	@Autowired
-	TaskManager taskManager;
+	TaskManagerService taskManager;
 	
 //	@RequestMapping(value="/")
 //	public ModelAndView defaultPage(Map<String, Object> model){
