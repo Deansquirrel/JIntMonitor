@@ -3,7 +3,6 @@ package com.yuansong.notify;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -21,9 +20,6 @@ public class DingMessageSender implements MessageSender {
 	public DingMessageSender(String robotToken) {
 		this.robotToken = robotToken;
 	}
-	
-	@Autowired
-	private OkHttpClient sharedClient;
 
 	@Override
 	public void send(String msg) {
@@ -32,13 +28,8 @@ public class DingMessageSender implements MessageSender {
 			return;
 		}
 		
-//		OkHttpClient client = new OkHttpClient.Builder()
-//				.connectTimeout(30, TimeUnit.SECONDS)
-//				.readTimeout(30, TimeUnit.SECONDS)
-//				.build();
-		
 		String url = "https://oapi.dingtalk.com/robot/send?access_token=" + robotToken;
-		String data = "{\"msgtype\": \"text\",\"text\": {\"content\": \" " + msg + "\" }}";
+		String data = "{\"msgtype\": \"text\",\"text\": {\"content\": \"" + msg + "\" }}";
 		
 		RequestBody body = RequestBody.create(JSON, data);
 		Request request = new Request.Builder()
@@ -46,7 +37,7 @@ public class DingMessageSender implements MessageSender {
 				.post(body)
 				.build();
 		
-		OkHttpClient okHttpClient = sharedClient.newBuilder()
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()
 				.connectTimeout(30, TimeUnit.SECONDS)
 				.readTimeout(30, TimeUnit.SECONDS)
 				.build();
