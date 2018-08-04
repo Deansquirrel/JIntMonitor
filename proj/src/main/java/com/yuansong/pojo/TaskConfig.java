@@ -8,6 +8,8 @@ public class TaskConfig {
 	private String pwd;
 	private String search;
 	
+	private String corn;
+	
 	private int checkMax;
 	private int checkMin;
 	
@@ -94,6 +96,14 @@ public class TaskConfig {
 
 	public void setSearch(String search) {
 		this.search = search;
+	}
+
+	public String getCorn() {
+		return corn;
+	}
+
+	public void setCorn(String corn) {
+		this.corn = corn;
 	}
 
 }

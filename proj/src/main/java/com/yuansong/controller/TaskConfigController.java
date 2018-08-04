@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.yuansong.pojo.TaskConfig;
-import com.yuansong.service.TaskConfigService;
+import com.yuansong.service.TaskConfigServiceImpl;
 
 @Controller
 @RequestMapping(value="/TaskConfig")
@@ -23,7 +23,7 @@ public class TaskConfigController {
 	private Gson mGson = new Gson();
 	
 	@Autowired
-	private TaskConfigService taskConfigService;
+	private TaskConfigServiceImpl taskConfigService;
 	
 	@RequestMapping(value="/Refresh")
 	public ModelAndView refresh(Map<String, Object> model){

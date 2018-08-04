@@ -1,50 +1,19 @@
 package com.yuansong.service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ScheduledFuture;
+import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.SchedulingException;
-import org.springframework.scheduling.TaskScheduler;
-import org.springframework.scheduling.support.CronTrigger;
-import org.springframework.stereotype.Service;
-
-@Service
-public class TaskManagerService {
+public interface TaskManagerService {
 	
-	@Autowired
-    TaskScheduler scheduler;
+	public Set<String> getTaskIdList();
 	
-	private Map<String, ScheduledFuture<?>> list;
+	public void addTask(String taskId, Runnable taskWorker, String cron);
 	
-	public TaskManagerService() {
-		list = new HashMap<String, ScheduledFuture<?>>();
-	}
+	public void cancelTask(String taskId);
 	
-	public void addTask(String taskId, Runnable taskJob, String cron) {
-		if(list.containsKey(taskId)) {
-			throw new SchedulingException("the taskId[" + taskId + "] was added.");
-		}
-		
-		ScheduledFuture<?> future = scheduler.schedule(taskJob, new CronTrigger(cron));
-		list.put(taskId, future);
-	}
+	public void cancelAllTask();
 	
-	public void cancelTask(String taskId) {
-		if(list.containsKey(taskId)) {
-			list.get(taskId).cancel(true);
-			list.remove(taskId);
-		}
-	}
+	public void resetTask(String taskId, Runnable taskWorker, String cron);
 	
-	public void resetTriggerTask(String taskId, Runnable taskJob, String cron) {
-		cancelTask(taskId);
-		addTask(taskId, taskJob, cron);
-	}
-	
-	public boolean hasTask(String taskId) {
-		return list.containsKey(taskId);
-	}
+	public boolean hasTask(String taskId);
 
 }

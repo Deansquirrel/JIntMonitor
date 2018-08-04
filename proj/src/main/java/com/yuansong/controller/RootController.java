@@ -6,12 +6,14 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.yuansong.common.CommonFun;
-import com.yuansong.service.TaskManagerService;
+import com.yuansong.notify.DingMessageSender;
+import com.yuansong.service.TaskManagerServiceImpl;
 import com.yuansong.taskjob.TestJob;
 
 @Controller
@@ -25,7 +27,7 @@ public class RootController {
 	private String taskId;
 	
 	@Autowired
-	TaskManagerService taskManager;
+	TaskManagerServiceImpl taskManager;
 	
 //	@RequestMapping(value="/")
 //	public ModelAndView defaultPage(Map<String, Object> model){
@@ -101,5 +103,18 @@ public class RootController {
 
 		return new ModelAndView("responsePage", model);
 	}
+	
+	@RequestMapping(value="/SendMsg/{msg}")
+	public ModelAndView stopTask(@PathVariable String msg, Map<String, Object> model) {
+		
+		DingMessageSender dms = new DingMessageSender("7a84d09b83f9633ad37866505d2c0c26e39f4fa916b3af8f6a702180d3b9906b");
+		dms.send(msg);
+		
+		model.put("info", "Send Completed");
+
+		return new ModelAndView("responsePage", model);
+	}
+	
+	
 	
 }
