@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.yuansong.common.CommonFun;
+import com.yuansong.common.HttpUtils;
 import com.yuansong.notify.DingMessageSender;
 import com.yuansong.service.TaskManagerServiceImpl;
 import com.yuansong.taskjob.TestJob;
@@ -115,6 +116,30 @@ public class RootController {
 		return new ModelAndView("responsePage", model);
 	}
 	
+	@RequestMapping(value="/Http/Get")
+	public ModelAndView httpGet(Map<String, Object> model) {
+		
+		logger.debug("RootController httpGet");
+		
+		HttpUtils httpUtils = new HttpUtils();
+		String result = httpUtils.httpGet("http://123.57.70.114");
+		
+		model.put("info", result);
+
+		return new ModelAndView("responsePage", model);
+	}
 	
-	
+	@RequestMapping(value="/Http/Post")
+	public ModelAndView httpPost(Map<String, Object> model) {
+		
+		logger.debug("RootController httpPost");
+		
+		HttpUtils httpUtils = new HttpUtils();
+		String result = httpUtils.httpPost("https://oapi.dingtalk.com/robot/send?access_token=7a84d09b83f9633ad37866505d2c0c26e39f4fa916b3af8f6a702180d3b9906b",
+				"{\"msgtype\": \"text\",\"text\": {\"content\": \"" + "test" + "\" }}");
+		
+		model.put("info", result);
+
+		return new ModelAndView("responsePage", model);
+	}
 }
