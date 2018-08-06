@@ -135,7 +135,7 @@ public class RootController {
 		logger.debug("RootController httpPost");
 		
 		HttpUtils httpUtils = new HttpUtils();
-		String result = httpUtils.httpPost("https://oapi.dingtalk.com/robot/send?access_token=7a84d09b83f9633ad37866505d2c0c26e39f4fa916b3af8f6a702180d3b9906b",
+		String result = httpUtils.httpPostJson("https://oapi.dingtalk.com/robot/send?access_token=7a84d09b83f9633ad37866505d2c0c26e39f4fa916b3af8f6a702180d3b9906b",
 				"{\"msgtype\": \"text\",\"text\": {\"content\": \"" + "test" + "\" }}");
 		
 		model.put("info", result);

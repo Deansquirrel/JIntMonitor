@@ -56,7 +56,7 @@ public class HttpUtils {
 //		return "";
 //	}
 	
-	public String httpPost(String url, String data) {
+	public String httpPostJson(String url, String data) {
 		OutputStreamWriter out = null;
         BufferedReader in = null;
         String result = "";

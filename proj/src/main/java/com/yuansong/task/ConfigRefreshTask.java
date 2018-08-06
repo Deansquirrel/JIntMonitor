@@ -4,17 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.yuansong.service.TaskConfigServiceImpl;
+import com.yuansong.pojo.HealthConfig;
+import com.yuansong.pojo.TaskConfig;
+import com.yuansong.service.ConfigService;
 
 @Component
-public class TaskConfigRefreshTask {
+public class ConfigRefreshTask {
 	
 	@Autowired
-	private TaskConfigServiceImpl taskConfigService;
+	private ConfigService<TaskConfig> taskConfigService;
+	
+	@Autowired
+	private ConfigService<HealthConfig> healthConfigService;
 	
 	@Scheduled(cron = "0 1/5 * * * ?")
 	public void taskConfigReresh() {
 		taskConfigService.refreshConfigList();
+		healthConfigService.refreshConfigList();
 	}
 
 }

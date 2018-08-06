@@ -21,7 +21,7 @@ import com.yuansong.taskjob.CheckIntWorker;
 
 
 @Service
-public class TaskConfigServiceImpl implements TaskConfigService {
+public class TaskConfigServiceImpl implements ConfigService<TaskConfig> {
 	
 	private final Logger logger = Logger.getLogger(TaskConfigServiceImpl.class);
 	
@@ -33,7 +33,7 @@ public class TaskConfigServiceImpl implements TaskConfigService {
 	private TaskManagerService taskManagerService;
 	
 	public TaskConfigServiceImpl() {
-		logger.debug("TaskConfig Init");
+		logger.debug("TaskConfigServiceImpl Init");
 		configMap = new HashMap<String, TaskConfig>();
 	}
 	
@@ -77,12 +77,12 @@ public class TaskConfigServiceImpl implements TaskConfigService {
 	}
 	
 	@Override
-	public Set<String> getTaskConfigKeyList(){
+	public Set<String> getConfigKeyList(){
 		return configMap.keySet();
 	}
 	
 	@Override
-	public Map<String, TaskConfig> getTaskConfigMap(){
+	public Map<String, TaskConfig> getConfigMap(){
 		return configMap;
 	}
 	
