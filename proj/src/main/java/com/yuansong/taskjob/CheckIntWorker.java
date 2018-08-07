@@ -1,6 +1,7 @@
 package com.yuansong.taskjob;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -10,8 +11,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import com.google.gson.Gson;
-import com.yuansong.notify.DingMessageSender;
-import com.yuansong.pojo.TaskConfig;
+import com.yuansong.notify.MessageSender;
+import com.yuansong.pojo.IntTaskConfig;
 
 public class CheckIntWorker implements TaskWorker, Runnable {
 	
@@ -19,7 +20,9 @@ public class CheckIntWorker implements TaskWorker, Runnable {
 	
 	private static final String dirverClass = "net.sourceforge.jtds.jdbc.Driver";
 	
-	private TaskConfig taskConfig;
+	private IntTaskConfig taskConfig;
+	
+	private List<MessageSender> notifyList;
 	
 	private Gson mGson = new Gson();
 	
@@ -28,12 +31,11 @@ public class CheckIntWorker implements TaskWorker, Runnable {
 		
 		super.finalize();
 	}
-
-
-	private DingMessageSender dms;
 	
-	public CheckIntWorker(TaskConfig taskConfig) {
+	public CheckIntWorker(IntTaskConfig taskConfig, List<MessageSender> list) {
+		logger.debug("CheckIntWorker Init - " + mGson.toJson(taskConfig));
 		this.taskConfig = taskConfig;
+		this.notifyList = list;
 	}
 
 	@Override
@@ -50,14 +52,12 @@ public class CheckIntWorker implements TaskWorker, Runnable {
 		}catch (InvalidResultSetAccessException e){
 			logger.error(e.getMessage());
 			e.printStackTrace();
-			dms = new DingMessageSender(taskConfig.getRobotToken());
-			dms.send(e.getMessage());
+			sendMsg(e.getMessage());
 			return;
 		}catch (DataAccessException e){
 			logger.error(e.getMessage());
 			e.printStackTrace();
-			dms = new DingMessageSender(taskConfig.getRobotToken());
-			dms.send(e.getMessage());
+			sendMsg(e.getMessage());
 			return;
 		}finally {
 			try {
@@ -68,16 +68,13 @@ public class CheckIntWorker implements TaskWorker, Runnable {
 			}
 		}
 		
-		
-		
 		if(value <= taskConfig.getCheckMin() || value >= taskConfig.getCheckMax()) {
 			String msg = taskConfig.getMsgContent();
 			msg = msg.replace("title", String.valueOf(value));
 			msg = msg.replace("Max", String.valueOf(taskConfig.getCheckMax()));
 			msg = msg.replace("Min", String.valueOf(taskConfig.getCheckMin()));
 			logger.info(msg);
-			dms = new DingMessageSender(taskConfig.getRobotToken());
-			dms.send(taskConfig.getMsgTitle() + "\n" + msg);
+			sendMsg(taskConfig.getMsgTitle() + "\n" + msg);
 		}
 	}
 
@@ -99,35 +96,12 @@ public class CheckIntWorker implements TaskWorker, Runnable {
 		jdbcTemplate.setDataSource(dataSource);
 		
 		return jdbcTemplate;
-		
-//		BoneCPDataSource dataSource = new BoneCPDataSource();
-//		dataSource.setDriverClass("net.sourceforge.jtds.jdbc.Driver");
-//		dataSource.setJdbcUrl("jdbc:jtds:sqlserver://" + taskConfig.getServer() + ";DatabaseName=" + taskConfig.getDbName());
-//		dataSource.setUsername(taskConfig.getUser());
-//		dataSource.setPassword(taskConfig.getPwd());
-//		dataSource.setMaxConnectionsPerPartition(30);
-//		dataSource.setMinConnectionsPerPartition(10);
-//		dataSource.setPartitionCount(3);
-//		dataSource.setAcquireIncrement(5);
-//		dataSource.setPoolAvailabilityThreshold(10);
-//		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-//		jdbcTemplate.setQueryTimeout(30);
-//		return jdbcTemplate;
 	}
 	
-//	private void refreshConfig() {
-//		BoneCPDataSource dataSource = new BoneCPDataSource();
-//		dataSource.setDriverClass("net.sourceforge.jtds.jdbc.Driver");
-//		dataSource.setJdbcUrl("jdbc:jtds:sqlserver://" + taskConfig.getServer() + ";DatabaseName=" + taskConfig.getDbName());
-//		dataSource.setUsername(taskConfig.getUser());
-//		dataSource.setPassword(taskConfig.getPwd());
-//		dataSource.setMaxConnectionsPerPartition(30);
-//		dataSource.setMinConnectionsPerPartition(10);
-//		dataSource.setPartitionCount(3);
-//		dataSource.setAcquireIncrement(5);
-//		dataSource.setPoolAvailabilityThreshold(10);
-//		
-//		getJdbcTemplate().setDataSource(dataSource);
-//	}
+	private void sendMsg(String msg) {
+		for(MessageSender ms : notifyList) {
+			ms.send(msg);
+		}
+	}
 
 }

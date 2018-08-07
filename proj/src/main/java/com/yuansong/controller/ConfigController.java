@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.yuansong.pojo.HealthConfig;
-import com.yuansong.pojo.TaskConfig;
+import com.yuansong.pojo.DingMessageConfig;
+import com.yuansong.pojo.IntTaskConfig;
 import com.yuansong.service.ConfigService;
 
 @Controller
@@ -24,10 +24,10 @@ public class ConfigController {
 	private Gson mGson = new Gson();
 	
 	@Autowired
-	private ConfigService<TaskConfig> taskConfigService;
+	private ConfigService<IntTaskConfig> taskConfigService;
 	
 	@Autowired
-	private ConfigService<HealthConfig> healthConfigService;
+	private ConfigService<DingMessageConfig> healthConfigService;
 	
 	@RequestMapping(value="/Refresh")
 	public ModelAndView refresh(Map<String, Object> model){

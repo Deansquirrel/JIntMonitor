@@ -1,6 +1,6 @@
 package com.yuansong.pojo;
 
-public class TaskConfig {
+public class IntTaskConfig {
 	
 	private String server;
 	private String dbName;
@@ -15,8 +15,6 @@ public class TaskConfig {
 	
 	private String msgTitle;
 	private String msgContent;
-	
-	private String robotToken;
 
 	public String getServer() {
 		return server;
@@ -80,14 +78,6 @@ public class TaskConfig {
 
 	public void setMsgContent(String msgContent) {
 		this.msgContent = msgContent;
-	}
-
-	public String getRobotToken() {
-		return robotToken;
-	}
-
-	public void setRobotToken(String robotToken) {
-		this.robotToken = robotToken;
 	}
 
 	public String getSearch() {
