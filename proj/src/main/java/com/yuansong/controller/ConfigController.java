@@ -33,8 +33,8 @@ public class ConfigController {
 	public ModelAndView refresh(Map<String, Object> model){
 		logger.debug("ConfigController Refresh");
 		
-		taskConfigService.refreshConfigList();
-		healthConfigService.refreshConfigList();
+//		taskConfigService.refreshConfigList();
+//		healthConfigService.refreshConfigList();
 		
 		model.put("info", "Refresh Complete");
 		
