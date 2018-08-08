@@ -13,16 +13,16 @@ import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TaskManagerServiceImpl implements TaskManagerService {
+public class TaskWorkerManagerServiceImpl implements TaskWorkerManagerService {
 	
-	private final Logger logger = Logger.getLogger(TaskManagerServiceImpl.class);
+	private final Logger logger = Logger.getLogger(TaskWorkerManagerServiceImpl.class);
 	
 	@Autowired
     TaskScheduler scheduler;
 	
 	private Map<String, ScheduledFuture<?>> list;
 	
-	public TaskManagerServiceImpl() {
+	public TaskWorkerManagerServiceImpl() {
 		list = new HashMap<String, ScheduledFuture<?>>();
 	}
 	

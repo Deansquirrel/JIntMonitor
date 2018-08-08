@@ -1,7 +1,7 @@
 package com.yuansong.taskjob;
 
-public interface TaskWorker {
+public interface TaskWorker extends Runnable {
 	
-	public String getTaskConfig();
+	public String getConfigStr();
 
 }

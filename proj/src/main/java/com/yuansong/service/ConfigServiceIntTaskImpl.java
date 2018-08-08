@@ -15,7 +15,7 @@ public class ConfigServiceIntTaskImpl extends ConfigServiceAbstractImpl<IntTaskC
 	
 	public ConfigServiceIntTaskImpl() {
 		super();
-		logger.debug("ConfigServiceIntTaskImpl Init. ");
+		logger.debug("ConfigServiceIntTaskImpl Init");
 	}
 
 	@Override

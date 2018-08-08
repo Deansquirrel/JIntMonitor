@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 import com.yuansong.common.CommonFun;
 import com.yuansong.common.HttpUtils;
 import com.yuansong.notify.DingMessageSender;
-import com.yuansong.service.TaskManagerServiceImpl;
+import com.yuansong.service.TaskWorkerManagerServiceImpl;
 import com.yuansong.taskjob.TestJob;
 
 @Controller
@@ -28,7 +28,7 @@ public class RootController {
 	private String taskId;
 	
 	@Autowired
-	TaskManagerServiceImpl taskManager;
+	TaskWorkerManagerServiceImpl taskManager;
 	
 //	@RequestMapping(value="/")
 //	public ModelAndView defaultPage(Map<String, Object> model){

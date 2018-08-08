@@ -2,7 +2,7 @@ package com.yuansong.service;
 
 import java.util.Set;
 
-public interface TaskManagerService {
+public interface TaskWorkerManagerService {
 	
 	public Set<String> getTaskIdList();
 	
