@@ -38,14 +38,14 @@ public class ConfigRefreshTask {
 	@Autowired
 	private TaskWorkerManagerService taskWorkerManagerService;
 	
-	@Scheduled(cron = "0 0/1 * * * ?")
+	@Scheduled(cron = "0 0/5 * * * ?")
 	public void configReresh() {
 		/* 刷新Task前先刷新MessageSender */
 		refreshMessageSender();
 		refreshTaskWorker();
 	}
 	
-	public void refreshMessageSender() {
+	private void refreshMessageSender() {
 		int dingMessageSender = refreshDingMessageSender("notifyConfig\\DingMessage");
 		//MessageSender有更新时，刷新所有任务
 		if(dingMessageSender > 0) {
@@ -54,7 +54,7 @@ public class ConfigRefreshTask {
 		}
 	}
 	
-	public void refreshTaskWorker() {
+	private void refreshTaskWorker() {
 		refreshTaskWorkerInt("taskConfig\\IntTask");
 		refrehsTaskWorkerHealth("taskConfig\\Healthconfig");
 	}
