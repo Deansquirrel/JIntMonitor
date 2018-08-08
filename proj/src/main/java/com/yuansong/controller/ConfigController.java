@@ -12,8 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.yuansong.pojo.DingMessageConfig;
+import com.yuansong.pojo.HealthConfig;
 import com.yuansong.pojo.IntTaskConfig;
 import com.yuansong.service.ConfigService;
+import com.yuansong.task.ConfigRefreshTask;
 
 @Controller
 @RequestMapping(value="/Config")
@@ -27,14 +29,19 @@ public class ConfigController {
 	private ConfigService<IntTaskConfig> taskConfigService;
 	
 	@Autowired
-	private ConfigService<DingMessageConfig> healthConfigService;
+	private ConfigService<HealthConfig> healthConfigService;
+	
+	@Autowired
+	private ConfigService<DingMessageConfig> dingMessageConfigService;
+	
+	@Autowired
+	private ConfigRefreshTask configRefreshTask;
 	
 	@RequestMapping(value="/Refresh")
 	public ModelAndView refresh(Map<String, Object> model){
 		logger.debug("ConfigController Refresh");
 		
-//		taskConfigService.refreshConfigList();
-//		healthConfigService.refreshConfigList();
+		configRefreshTask.configReresh();
 		
 		model.put("info", "Refresh Complete");
 		
@@ -49,7 +56,7 @@ public class ConfigController {
 		StringBuilder sb = new StringBuilder();
 		sb.append("当前加载文件列表").append("<br />");
 		
-		sb.append("TaskConfig").append("<br />");
+		sb.append("IntTaskCofig").append("<br />");
 		list = taskConfigService.getConfigKeyList();
 		for(String key : list) {
 			sb.append(key).append("<br />");
@@ -57,6 +64,12 @@ public class ConfigController {
 		
 		sb.append("HealthConfig").append("<br />");
 		list = healthConfigService.getConfigKeyList();
+		for(String key : list) {
+			sb.append(key).append("<br />");
+		}
+		
+		sb.append("DingMessageSenderConfig").append("<br />");
+		list = dingMessageConfigService.getConfigKeyList();
 		for(String key : list) {
 			sb.append(key).append("<br />");
 		}
@@ -72,12 +85,17 @@ public class ConfigController {
 		String result = "";
 		
 		if(taskConfigService.getConfigKeyList().contains(configKey)) {
-			result = result + "TaskConfig" + "<br />";
+			result = result + "IntTaskConfig" + "<br />";
 			result = result + mGson.toJson(taskConfigService.getConfig(configKey)) + "<br />";
 		}
 		if(healthConfigService.getConfigKeyList().contains(configKey)) {
 			result = result + "HealthConfig" + "<br />";
 			result = result + mGson.toJson(healthConfigService.getConfig(configKey)) + "<br />";;
+		}
+		
+		if(dingMessageConfigService.getConfigKeyList().contains(configKey)) {
+			result = result + "DingMessageConfig" + "<br />";
+			result = result + mGson.toJson(dingMessageConfigService.getConfig(configKey)) + "<br />";;
 		}
 		
 		if(result.equals("")) {
