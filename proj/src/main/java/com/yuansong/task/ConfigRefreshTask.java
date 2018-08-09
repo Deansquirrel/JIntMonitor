@@ -10,13 +10,15 @@ import org.springframework.stereotype.Component;
 
 import com.yuansong.notify.DingMessageSender;
 import com.yuansong.pojo.DingMessageConfig;
-import com.yuansong.pojo.HealthConfig;
+import com.yuansong.pojo.HealthTaskConfig;
 import com.yuansong.pojo.IntTaskConfig;
+import com.yuansong.pojo.WebStateTaskConfig;
 import com.yuansong.service.ConfigService;
 import com.yuansong.service.MessageSenderManagerService;
 import com.yuansong.service.TaskWorkerManagerService;
 import com.yuansong.taskjob.TaskWorkerHealth;
 import com.yuansong.taskjob.TaskWorkerInt;
+import com.yuansong.taskjob.TaskWorkerWebState;
 
 @Component
 public class ConfigRefreshTask {
@@ -27,10 +29,13 @@ public class ConfigRefreshTask {
 	private ConfigService<DingMessageConfig> dingMessageConfigService;
 	
 	@Autowired
-	private ConfigService<HealthConfig> healthConfigService;
+	private ConfigService<HealthTaskConfig> healthConfigService;
 	
 	@Autowired
 	private ConfigService<IntTaskConfig> intTaskConfigService;
+	
+	@Autowired
+	private ConfigService<WebStateTaskConfig> webStateTaskConfigService;
 	
 	@Autowired
 	private MessageSenderManagerService messageSenderManagerService;
@@ -38,7 +43,7 @@ public class ConfigRefreshTask {
 	@Autowired
 	private TaskWorkerManagerService taskWorkerManagerService;
 	
-	@Scheduled(cron = "0 0/5 * * * ?")
+	@Scheduled(cron = "0 0/1 * * * ?")
 	public void configReresh() {
 		/* 刷新Task前先刷新MessageSender */
 		refreshMessageSender();
@@ -56,7 +61,8 @@ public class ConfigRefreshTask {
 	
 	private void refreshTaskWorker() {
 		refreshTaskWorkerInt("taskConfig\\IntTask");
-		refrehsTaskWorkerHealth("taskConfig\\Healthconfig");
+		refreshTaskWorkerHealth("taskConfig\\Healthconfig");
+		refreshTaskWorkerWebState("taskConfig\\WebState");
 	}
 	
 	private void resetAllTask() {
@@ -73,6 +79,12 @@ public class ConfigRefreshTask {
 					new TaskWorkerInt(intTaskConfigService.getConfig(key),messageSenderManagerService.getMessageSenderList()),
 					intTaskConfigService.getConfig(key).getCorn());
 		}
+		for(String key : webStateTaskConfigService.getConfigKeyList()) {
+			taskWorkerManagerService.addTask(
+					key, 
+					new TaskWorkerWebState(webStateTaskConfigService.getConfig(key),messageSenderManagerService.getMessageSenderList()),
+					webStateTaskConfigService.getConfig(key).getCorn());
+		}
 	}
 
 	/**
@@ -81,6 +93,7 @@ public class ConfigRefreshTask {
 	 * @return 更新的数量
 	 */
 	private int refreshDingMessageSender(String path) {
+		logger.debug("refreshDingMessageSender");
 		Map<String, List<String>> result = dingMessageConfigService.refreshConfigList(path);
 		
 		for(String key : result.get("add")) {
@@ -103,6 +116,7 @@ public class ConfigRefreshTask {
 	 * @param path 配置文件相对路径
 	 */
 	private void refreshTaskWorkerInt(String path) {
+		logger.debug("refreshTaskWorkerInt");
 		Map<String, List<String>> result = intTaskConfigService.refreshConfigList(path);
 		for(String key : result.get("add")) {
 			taskWorkerManagerService.addTask(
@@ -125,7 +139,8 @@ public class ConfigRefreshTask {
 	 * 刷新HealthConfig，并根据配置更新的内容，更新TaskWorkerManagerService中的TaskWorkerHealth
 	 * @param path 配置文件相对路径
 	 */
-	private void refrehsTaskWorkerHealth(String path) {
+	private void refreshTaskWorkerHealth(String path) {
+		logger.debug("refreshTaskWorkerHealth");
 		Map<String, List<String>> result = healthConfigService.refreshConfigList(path);
 		
 		for(String key : result.get("add")) {
@@ -142,6 +157,31 @@ public class ConfigRefreshTask {
 					key, 
 					new TaskWorkerHealth(healthConfigService.getConfig(key),messageSenderManagerService.getMessageSenderList()),
 					healthConfigService.getConfig(key).getCorn());
+		}
+	}
+	
+	/**
+	 * 刷新WebStateConfig，并根据配置更新的内容，更新TaskWorkerManagerService中的TaskWorkerWebSatate
+	 * @param path 配置文件相对路径
+	 */
+	private void refreshTaskWorkerWebState(String path) {
+		logger.debug("refreshTaskWorkerWebState");
+		Map<String, List<String>> result = webStateTaskConfigService.refreshConfigList(path);
+		
+		for(String key : result.get("add")) {
+			taskWorkerManagerService.addTask(
+					key, 
+					new TaskWorkerWebState(webStateTaskConfigService.getConfig(key),messageSenderManagerService.getMessageSenderList()),
+					webStateTaskConfigService.getConfig(key).getCorn());
+		}
+		for(String key : result.get("cancel")) {
+			taskWorkerManagerService.cancelTask(key);
+		}
+		for(String key : result.get("refresh")) {
+			taskWorkerManagerService.resetTask(
+					key, 
+					new TaskWorkerWebState(webStateTaskConfigService.getConfig(key),messageSenderManagerService.getMessageSenderList()),
+					webStateTaskConfigService.getConfig(key).getCorn());
 		}
 	}
 	

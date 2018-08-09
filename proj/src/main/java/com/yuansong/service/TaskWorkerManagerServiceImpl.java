@@ -12,6 +12,8 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
+import com.yuansong.taskjob.TaskWorker;
+
 @Service
 public class TaskWorkerManagerServiceImpl implements TaskWorkerManagerService {
 	
@@ -27,7 +29,7 @@ public class TaskWorkerManagerServiceImpl implements TaskWorkerManagerService {
 	}
 	
 	@Override
-	public void addTask(String taskId, Runnable taskWorker, String cron) {
+	public void addTask(String taskId, TaskWorker taskWorker, String cron) {
 		if(list.containsKey(taskId)) {
 			throw new SchedulingException("the taskId[" + taskId + "] was added.");
 		}
@@ -56,7 +58,7 @@ public class TaskWorkerManagerServiceImpl implements TaskWorkerManagerService {
 	}
 	
 	@Override
-	public void resetTask(String taskId, Runnable taskWorker, String cron) {
+	public void resetTask(String taskId, TaskWorker taskWorker, String cron) {
 		cancelTask(taskId);
 		addTask(taskId, taskWorker, cron);
 	}
