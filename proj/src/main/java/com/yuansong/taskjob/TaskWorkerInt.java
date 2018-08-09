@@ -24,12 +24,11 @@ public class TaskWorkerInt extends TaskWorkerAbstractImpl<IntTaskConfig> {
 
 	@Override
 	protected String check() {
-		if(getConfig() == null) {
+		IntTaskConfig taskConfig = getConfig();
+		if(taskConfig == null) {
 			logger.warn("IntTaskConfig is null");
 			return "IntTaskConfig is null";
 		}
-		
-		IntTaskConfig taskConfig = getConfig();
 		
 		JdbcTemplate jdbcTemplate = getJdbcTemplate();
 		Integer value;
