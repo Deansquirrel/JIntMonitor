@@ -3,6 +3,7 @@ package com.yuansong.pojo;
 public class IntTaskConfig extends  TaskConfig{
 	
 	private String server;
+	private String port;
 	private String dbName;
 	private String user;
 	private String pwd;
@@ -67,5 +68,13 @@ public class IntTaskConfig extends  TaskConfig{
 
 	public void setSearch(String search) {
 		this.search = search;
+	}
+
+	public String getPort() {
+		return port;
+	}
+
+	public void setPort(String port) {
+		this.port = port;
 	}
 }

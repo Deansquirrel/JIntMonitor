@@ -1,6 +1,6 @@
 package com.yuansong.pojo;
 
-public class DingMessageConfig {
+public class DingMessageConfig extends MessageConfig{
 	
 	private String robotToken;
 

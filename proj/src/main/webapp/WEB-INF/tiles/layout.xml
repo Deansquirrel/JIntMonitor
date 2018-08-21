@@ -6,6 +6,27 @@
 
 
 	<definition name="template-base" template="/layouts/base.jsp" />
+	
+	<definition name="responsePage" extends="template-base">
+		<put-attribute name="content" value="/layouts/content.jsp" />
+	</definition>
+	 
+	<definition name="errorPage" extends="template-base">
+		<put-attribute name="content" value="/layouts/error.jsp" />
+	</definition>
+	
+	
+	<definition name="template-basev2" template="/layouts/basev2.jsp" />
+	
+	<definition name="IntTaskConfigList" extends="template-basev2">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/IntTaskConfigList.jsp" />
+	</definition>
+	
+	<definition name="IntTaskConfigAdd" extends="template-basev2">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/IntTaskConfigAdd.jsp" />
+	</definition>
+	
+	
 	<!-- <definition name="content-base" template="/layouts/main.jsp" /> -->
 <!-- 	
 	<definition name="testPage" extends="template-base">
@@ -17,13 +38,7 @@
 	</definition>
 	 -->
 	 
-	 <definition name="responsePage" extends="template-base">
-		<put-attribute name="content" value="/layouts/content.jsp" />
-	</definition>
 	 
-	<definition name="errorPage" extends="template-base">
-		<put-attribute name="content" value="/layouts/error.jsp" />
-	</definition>
 	
 	<!-- 
 	<definition name="nav" extends="template-base">

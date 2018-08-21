@@ -72,7 +72,7 @@ public class TaskWorkerInt extends TaskWorkerAbstractImpl<IntTaskConfig> {
 		
 		DriverManagerDataSource dataSource = new DriverManagerDataSource ();
 		dataSource.setDriverClassName(dirverClass);
-		dataSource.setUrl("jdbc:jtds:sqlserver://" + getConfig().getServer() + ";DatabaseName=" + getConfig().getDbName());
+		dataSource.setUrl("jdbc:jtds:sqlserver://" + getConfig().getServer() + ":" + getConfig().getPort() +";DatabaseName=" + getConfig().getDbName());
 		dataSource.setUsername(getConfig().getUser());
 		dataSource.setPassword(getConfig().getPwd());
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();

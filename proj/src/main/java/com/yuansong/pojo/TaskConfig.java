@@ -1,6 +1,6 @@
 package com.yuansong.pojo;
 
-public abstract class TaskConfig {
+public abstract class TaskConfig extends Config{
 	
 	private String corn;
 	
