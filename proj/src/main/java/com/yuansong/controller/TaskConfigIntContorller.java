@@ -17,27 +17,27 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.yuansong.common.CommonFun;
-import com.yuansong.pojo.DingMessageConfig;
+import com.yuansong.pojo.IntTaskConfig;
 import com.yuansong.service.ConfigService;
 
 @Controller
-@RequestMapping(value="/MessageSender/Ding")
-public class MessageSenderController {
-
-	private final Logger logger = Logger.getLogger(MessageSenderController.class);
-
-	private Gson mGson = new Gson();	
+@RequestMapping(value="/TaskConfig/Int")
+public class TaskConfigIntContorller {
+	
+	private final Logger logger = Logger.getLogger(TaskConfigIntContorller.class);
+	
+	private Gson mGson = new Gson();
 	
 	@Autowired
-	private ConfigService<DingMessageConfig> dingMessageConfigService;
+	private ConfigService<IntTaskConfig> intTaskConfigService;
 	
 	@RequestMapping(value="/List")
-	public ModelAndView dingMessageConfigList(Map<String, Object> model) {
-		logger.debug("RootController dingMessageConfigList");
+	public ModelAndView intTaskConfigList(Map<String, Object> model) {
+		logger.debug("RootController intTaskConfigList");
 		
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		Map<String, String> listItem;
-		for(DingMessageConfig config : dingMessageConfigService.getSetConfigList()) {
+		for(IntTaskConfig config : intTaskConfigService.getSetConfigList()) {
 			listItem = new HashMap<String, String>();
 			listItem.put("id", config.getId());
 			listItem.put("title", config.getTitle());
@@ -47,51 +47,70 @@ public class MessageSenderController {
 		model.put("list", list);
 		
 		List<String> menuList = new ArrayList<String>();
-		menuList.add("MessageSender");
-		menuList.add("Ding");
+		menuList.add("TaskConfig");
+		menuList.add("Int");
 		menuList.add("List");
 		
 		model.put("menulist", mGson.toJson(menuList));
 		
-		return new ModelAndView("MessageSenderConfigDingList", model);
+		return new ModelAndView("TaskConfigIntList", model);
 	}
-	
-	
+
 	@RequestMapping(value="/Add",method=RequestMethod.GET)
-	public ModelAndView dingMessageConfigAdd(Map<String, Object> model) {
-		logger.debug("RootController dingMessageConfigAdd");
+	public ModelAndView intTaskConfigAdd(Map<String, Object> model) {
+		logger.debug("RootController intTaskConfigAdd");
 		
 		List<String> menuList = new ArrayList<String>();
-		menuList.add("MessageSender");
-		menuList.add("Ding");
+		menuList.add("TaskConfig");
+		menuList.add("Int");
 		menuList.add("Add");
 		
 		model.put("menulist", mGson.toJson(menuList));
 		
-		return new ModelAndView("MessageSenderConfigDingAdd", model);
+		return new ModelAndView("TaskConfigIntAdd", model);
 	}
 	
 	@Transactional
 	@RequestMapping(value="/Add",method=RequestMethod.POST)
-	public ModelAndView dingMessageConfigAddAction(
+	public ModelAndView intTaskConfigAddAction(
 			@RequestParam("i-title") String title,
 			@RequestParam("i-remark") String remark,
-			@RequestParam("i-robottoken") String robotToken,
+			@RequestParam("i-server") String server,
+			@RequestParam("i-port") String port,
+			@RequestParam("i-dbname") String dbName,
+			@RequestParam("i-user") String user,
+			@RequestParam("i-pwd") String pwd,
+			@RequestParam("i-search") String search,
+			@RequestParam("i-corn") String corn,
+			@RequestParam("i-checkmax") String checkMax,
+			@RequestParam("i-checkmin") String checkMin,
+			@RequestParam("i-msgtitle") String msgTitle,
+			@RequestParam("i-msgcontent") String msgContent,
 			Map<String, Object> model) {
-		logger.debug("RootController dingMessageConfigAddAction");
+		logger.debug("RootController intTaskConfigAddAction");
 		
-		DingMessageConfig config = new DingMessageConfig();
+		IntTaskConfig config = new IntTaskConfig();
 		config.setId(CommonFun.UUID());
 		config.setTitle(title.trim());
 		config.setRemark(remark.trim());
-		config.setRobotToken(robotToken);
+		config.setServer(server.trim());
+		config.setPort(port.trim());
+		config.setDbName(dbName.trim());
+		config.setUser(user.trim());
+		config.setPwd(pwd.trim());
+		config.setSearch(search.trim());
+		config.setCorn(corn);
+		config.setCheckMax(Integer.valueOf(checkMax.trim()));
+		config.setCheckMin(Integer.valueOf(checkMin.trim()));
+		config.setMsgTitle(msgTitle);
+		config.setMsgContent(msgContent);
 		
 		Map<String,String> data = new HashMap<String,String>();
 		data.put("errCode", "0");
 		data.put("errDesc","success");
 		
 		try {
-			dingMessageConfigService.add(config);
+			intTaskConfigService.add(config);
 		}catch(Exception ex) {
 			data.put("errCode", "-1");
 			data.put("errDesc",ex.getMessage());
@@ -105,13 +124,13 @@ public class MessageSenderController {
 	
 	@Transactional
 	@RequestMapping(value="/Del",method=RequestMethod.POST)
-	public ModelAndView webStateTaskConfigDelAction(
+	public ModelAndView intTaskConfigDelAction(
 			@RequestParam("i-id") String id,
 			Map<String, Object> model) {
-		logger.debug("RootController webStateTaskConfigDelAction");
+		logger.debug("RootController intTaskConfigDelAction");
 		logger.debug(id);
 		
-		DingMessageConfig config = new DingMessageConfig();
+		IntTaskConfig config = new IntTaskConfig();
 		config.setId(id);
 		
 		Map<String,String> data = new HashMap<String,String>();
@@ -119,7 +138,7 @@ public class MessageSenderController {
 		data.put("errDesc","success");
 		
 		try {
-			dingMessageConfigService.del(config);
+			intTaskConfigService.del(config);
 		}catch(Exception ex) {
 			data.put("errCode", "-1");
 			data.put("errDesc",ex.getMessage());
@@ -132,25 +151,25 @@ public class MessageSenderController {
 	}
 	
 	@RequestMapping(value="/Detail/{taskId}")
-	public ModelAndView dingMessageConfigDetail(@PathVariable String taskId, Map<String, Object> model) {
-		logger.debug("RootController webStateTaskConfigDetail - " + taskId);
+	public ModelAndView intTaskConfigDetail(@PathVariable String taskId, Map<String, Object> model) {
+		logger.debug("RootController intTaskConfigDetail - " + taskId);
 		
 		if(!taskId.trim().equals("")) {
-			DingMessageConfig config = dingMessageConfigService.getConfig(taskId);
+			IntTaskConfig config = intTaskConfigService.getConfig(taskId);
 			if(config != null) {
 				model.put("config",config);
 			}
 		}
 		
 		List<String> menuList = new ArrayList<String>();
-		menuList.add("MessageSender");
-		menuList.add("Ding");
+		menuList.add("TaskConfig");
+		menuList.add("Int");
 		menuList.add("List");
 		menuList.add("Detail");
 		
 		model.put("menulist", mGson.toJson(menuList));
 		
-		return new ModelAndView("MessageSenderConfigDingDetail", model);
+		return new ModelAndView("TaskConfigIntDetail", model);
 	}
 	
 }

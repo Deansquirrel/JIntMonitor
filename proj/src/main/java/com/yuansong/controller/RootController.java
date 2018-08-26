@@ -33,7 +33,7 @@ public class RootController {
 	@RequestMapping(value="/")
 	public ModelAndView defaultPage(Map<String, Object> model){
 		logger.debug("go to intTaskCongigList");
-		return new ModelAndView("redirect:/TaskConfig/IntTaskConfig/List");
+		return new ModelAndView("redirect:/TaskConfig/Int/List");
 	}
 	
 	@RequestMapping(value="/PageNotFound")

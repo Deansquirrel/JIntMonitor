@@ -43,6 +43,9 @@
 
 		<c:url var="urlStr" value="/layouts/assets/vendor/sweetalert2/sweetalert2.js" />
 		<script language="javascript" src="${urlStr }"></script>
+
+		<c:url var="urlStr" value="/layouts/assets/script/common.js" />
+		<script language="javascript" src="${urlStr }"></script>
 		
 	</head>
 	<body>
@@ -64,50 +67,65 @@
 				<ul class="nav" id="sidebar-nav-menu">
 					<li class="menu-group">TaskConfig</li>
 					<li class="panel">
+						<!--
 						<a href="#taskconfig" data-toggle="collapse" data-parent="#sidebar-nav-menu" class="active" aria-expanded="true">
-							<span class="title">IntTaskConfig</span>
+						-->
+						<a id="aint" href="#int" data-toggle="collapse" data-parent="#sidebar-nav-menu" class="active" aria-expanded="true">
+							<span class="title">Int</span>
 							<i class="icon-submenu ti-angle-left"></i>
 						</a>
-						<div id="taskconfig" class="collapse in">
+						<!--<div id="taskconfig" class="collapse in">-->
+						<div id="int" class="collapse in">
 							<ul class="submenu">
-								<c:url var="urlStr" value="/TaskConfig/IntTaskConfig/List" />
-								<li><a href="${urlStr }">List</a></li>
-								<c:url var="urlStr" value="/TaskConfig/IntTaskConfig/Add" />
-								<li><a href="${urlStr }">Add</a></li>
+								<c:url var="urlStr" value="/TaskConfig/Int/List" />
+								<li><a id="ataskintlist" href="${urlStr }">List</a></li>
+								<c:url var="urlStr" value="/TaskConfig/Int/Add" />
+								<li><a id="ataskintadd" href="${urlStr }">Add</a></li>
 							</ul>
 						</div>
 					</li>
 					<li class="panel">
-						<a href="#webstateconfig" data-toggle="collapse" data-parent="#sidebar-nav-menu" class="collapsed">
-							<span class="title">WebStateConfig</span>
+						<a id="awebstate" href="#webstate" data-toggle="collapse" data-parent="#sidebar-nav-menu" class="collapsed">
+							<span class="title">WebState</span>
 							<i class="icon-submenu ti-angle-left"></i>
 						</a>
-						<div id="webstateconfig" class="collapse">
+						<div id="webstate" class="collapse">
 							<ul class="submenu">
-								<li><a href="">List</a></li>
+								<c:url var="urlStr" value="/TaskConfig/WebState/List" />
+								<li><a id="ataskwebstatelist" href="${urlStr }">List</a></li>
+								<c:url var="urlStr" value="/TaskConfig/WebState/Add" />
+								<li><a id="ataskwebstateadd" href="${urlStr }">Add</a></li>
 							</ul>
 						</div>
 					</li>
 					<li class="panel">
-						<a href="#healthconfig" data-toggle="collapse" data-parent="#sidebar-nav-menu" class="collapsed">
-							<span class="title">HealthConfig</span>
+						<a id="ahealth" href="#health" data-toggle="collapse" data-parent="#sidebar-nav-menu" class="collapsed">
+							<span class="title">Health</span>
 							<i class="icon-submenu ti-angle-left"></i>
 						</a>
-						<div id="healthconfig" class="collapse">
+						<div id="health" class="collapse">
 							<ul class="submenu">
-								<li><a href="">List</a></li>
+								<c:url var="urlStr" value="/TaskConfig/Health/List" />
+								<li><a id="ataskhealthlist" href="${urlStr }">List</a></li>
+								<c:url var="urlStr" value="/TaskConfig/Health/Add" />
+								<li><a id="ataskhealthadd" href="${urlStr }">Add</a></li>
 							</ul>
 						</div>
 					</li>
+
+
 					<li class="menu-group">MessageSender</li>
 					<li class="panel">
-						<a href="#dingmessage" data-toggle="collapse" data-parent="#sidebar-nav-menu" class="collapsed">
-							<span class="title">DingMessage</span>
+						<a href="#ding" data-toggle="collapse" data-parent="#sidebar-nav-menu" class="collapsed">
+							<span class="title">Ding</span>
 							<i class="icon-submenu ti-angle-left"></i>
 						</a>
-						<div id="dingmessage" class="collapse">
+						<div id="ding" class="collapse">
 							<ul class="submenu">
-								<li><a href="">List</a></li>
+								<c:url var="urlStr" value="/MessageSender/Ding/List" />
+								<li><a id="amessagedinglist" href="${urlStr }">List</a></li>
+								<c:url var="urlStr" value="/MessageSender/Ding/Add" />
+								<li><a id="amessagedingadd" href="${urlStr }">Add</a></li>
 							</ul>
 						</div>
 					</li>
@@ -130,8 +148,6 @@
 					-->
 						<ul class="breadcrumb" id="view-breadcrumb">
 							<li>Home</li>
-							<li>TaskConfig</li>
-							<li>IntTaskConfig</li>
 						</ul>
 					</div>
 				

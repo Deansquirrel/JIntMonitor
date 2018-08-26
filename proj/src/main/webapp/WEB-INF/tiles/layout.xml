@@ -16,16 +16,59 @@
 	</definition>
 	
 	
-	<definition name="template-basev2" template="/layouts/basev2.jsp" />
+	<definition name="template-base-int" template="/layouts/base-int.jsp" />
+	<definition name="template-base-health" template="/layouts/base-health.jsp" />
+	<definition name="template-base-webstate" template="/layouts/base-webstate.jsp" />
+	<definition name="template-base-ding" template="/layouts/base-ding.jsp" />
 	
-	<definition name="IntTaskConfigList" extends="template-basev2">
-		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/IntTaskConfigList.jsp" />
+	<definition name="TaskConfigIntList" extends="template-base-int">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigIntList.jsp" />
 	</definition>
 	
-	<definition name="IntTaskConfigAdd" extends="template-basev2">
-		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/IntTaskConfigAdd.jsp" />
+	<definition name="TaskConfigIntAdd" extends="template-base-int">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigIntAdd.jsp" />
 	</definition>
 	
+	<definition name="TaskConfigIntDetail" extends="template-base-int">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigIntDetail.jsp" />
+	</definition>
+
+	<definition name="TaskConfigWebStateList" extends="template-base-webstate">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigWebStateList.jsp" />
+	</definition>
+	
+	<definition name="TaskConfigWebStateAdd" extends="template-base-webstate">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigWebStateAdd.jsp" />
+	</definition>
+	
+	<definition name="TaskConfigWebStateDetail" extends="template-base-webstate">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigWebStateDetail.jsp" />
+	</definition>
+
+	<definition name="TaskConfigHealthList" extends="template-base-health">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigHealthList.jsp" />
+	</definition>
+	
+	<definition name="TaskConfigHealthAdd" extends="template-base-health">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigHealthAdd.jsp" />
+	</definition>
+	
+	<definition name="TaskConfigHealthDetail" extends="template-base-health">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigHealthDetail.jsp" />
+	</definition>
+
+
+	<definition name="MessageSenderConfigDingList" extends="template-base-ding">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/MessageSenderConfigDingList.jsp" />
+	</definition>
+	
+	<definition name="MessageSenderConfigDingAdd" extends="template-base-ding">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/MessageSenderConfigDingAdd.jsp" />
+	</definition>
+	
+	<definition name="MessageSenderConfigDingDetail" extends="template-base-ding">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/MessageSenderConfigDingDetail.jsp" />
+	</definition>
 	
 	<!-- <definition name="content-base" template="/layouts/main.jsp" /> -->
 <!-- 	

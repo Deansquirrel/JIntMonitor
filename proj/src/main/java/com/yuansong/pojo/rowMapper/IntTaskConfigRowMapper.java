@@ -24,6 +24,8 @@ public class IntTaskConfigRowMapper implements RowMapper<IntTaskConfig> {
 		config.setCheckMin(rs.getInt("FCheckMin"));;
 		config.setMsgTitle(rs.getString("FMsgTitle"));
 		config.setMsgContent(rs.getString("FMsgContent"));
+		config.setTitle(rs.getString("FTitle"));
+		config.setRemark(rs.getString("FRemark"));
 		return config;
 	}
 }

@@ -31,6 +31,7 @@
 		<property name="partitionCount" value="3" />
 		<property name="acquireIncrement" value="5" />
 		<property name="poolAvailabilityThreshold" value="10" />
+		<property name="connectionTimeout" value="30000" />
 	</bean>
 	
 	<!-- 配置事务管理器 --> 

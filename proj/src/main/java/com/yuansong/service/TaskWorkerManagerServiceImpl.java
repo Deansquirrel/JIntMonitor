@@ -52,9 +52,9 @@ public class TaskWorkerManagerServiceImpl implements TaskWorkerManagerService {
 	public void cancelAllTask() {
 		for(String taskId :list.keySet()) {
 			list.get(taskId).cancel(true);
+			logger.info("Task " + taskId + "  canceled");
 		}
 		list.clear();
-		logger.info("All Task canceled");
 	}
 	
 	@Override

@@ -20,7 +20,24 @@ public class ConfigServiceHealthImpl extends ConfigService<HealthTaskConfig> {
 			"      ,[FCorn]" + 
 			"      ,[FMsgTitle]" + 
 			"      ,[FMsgContent]" + 
+			"      ,[FRemark]" + 
+			"      ,[FTitle]" +
 			"  FROM [HealthTaskConfig]";
+	
+	private static final String SQL_ADD = ""
+			+ "INSERT INTO [HealthTaskConfig]" + 
+			"           ([FId]" + 
+			"           ,[FCorn]" + 
+			"           ,[FMsgTitle]" + 
+			"           ,[FMsgContent]" + 
+			"           ,[FRemark]" + 
+			"           ,[FTitle])" + 
+			"     VALUES" + 
+			"           (?, ?, ?, ?, ?, ?)";
+	
+	private static final String SQL_DEL = ""
+			+ "DELETE FROM [HealthTaskConfig]" + 
+			"      WHERE [FId] = ?";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -31,13 +48,41 @@ public class ConfigServiceHealthImpl extends ConfigService<HealthTaskConfig> {
 	}
 
 	@Override
-	protected List<HealthTaskConfig> getSetConfigList() {
-		return jdbcTemplate.query(SQL_GETLIST, new HealthTaskConfigRowMapper());
+	public List<HealthTaskConfig> getSetConfigList() {
+		List<HealthTaskConfig> list = null;
+		try{
+			list = jdbcTemplate.query(SQL_GETLIST, new HealthTaskConfigRowMapper());
+		}catch(Exception ex) {
+			logger.error(ex.getMessage());
+		}
+		return list;
 	}
 
 	@Override
 	protected boolean checkConfig(HealthTaskConfig config) {
 		return true;
+	}
+
+	@Override
+	public void add(HealthTaskConfig config) {
+		try {
+			jdbcTemplate.update(SQL_ADD, new Object[] {
+					config.getId(),
+					config.getCorn(),
+					config.getMsgTitle(),
+					config.getMsgContent(),
+					config.getRemark(),
+					config.getTitle()
+			});
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	protected String getSqlDel() {
+		return SQL_DEL;
 	}
 
 //	@Override

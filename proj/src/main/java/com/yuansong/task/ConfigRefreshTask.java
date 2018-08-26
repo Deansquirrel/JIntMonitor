@@ -43,7 +43,7 @@ public class ConfigRefreshTask {
 	@Autowired
 	private TaskWorkerManagerService taskWorkerManagerService;
 	
-	@Scheduled(cron = "0 0/1 * * * ?")
+	@Scheduled(fixedDelay = 60 * 1000)
 	public synchronized void configReresh() {
 		/* 刷新Task前先刷新MessageSender */
 		logger.debug("Config Refresh");
@@ -60,7 +60,7 @@ public class ConfigRefreshTask {
 					for(DingMessageConfig config : list) {
 						messageSenderManagerService.add(config.getId(), new DingMessageSender(config.getRobotToken()));
 					}
-					resetAllTask();
+					taskWorkerManagerService.cancelAllTask();
 				}
 			}
 
@@ -70,7 +70,7 @@ public class ConfigRefreshTask {
 					for(DingMessageConfig config : list) {
 						messageSenderManagerService.del(config.getId());
 					}
-					resetAllTask();					
+					taskWorkerManagerService.cancelAllTask();					
 				}
 			}
 
@@ -81,10 +81,9 @@ public class ConfigRefreshTask {
 						messageSenderManagerService.del(config.getId());
 						messageSenderManagerService.add(config.getId(), new DingMessageSender(config.getRobotToken()));
 					}
-					resetAllTask();
+					taskWorkerManagerService.cancelAllTask();
 				}
 			}
-			
 		});
 	}
 	
@@ -167,20 +166,6 @@ public class ConfigRefreshTask {
 			}
 			
 		});
-	}
-	
-	private void resetAllTask() {
-		taskWorkerManagerService.cancelAllTask();
-		
-		for(HealthTaskConfig config : healthConfigService.getConfigMap().values()) {
-			taskWorkerManagerService.addTask(config.getId(), new TaskWorkerHealth(config, messageSenderManagerService.getMessageSenderList()), config.getCorn());
-		}
-		for(IntTaskConfig config : intTaskConfigService.getConfigMap().values()) {
-			taskWorkerManagerService.addTask(config.getId(), new TaskWorkerInt(config, messageSenderManagerService.getMessageSenderList()), config.getCorn());
-		}
-		for(WebStateTaskConfig config : webStateTaskConfigService.getConfigMap().values()) {
-			taskWorkerManagerService.addTask(config.getId(), new TaskWorkerWebState(config, messageSenderManagerService.getMessageSenderList()), config.getCorn());
-		}
 	}
 	
 //	private void refreshMessageSender() {

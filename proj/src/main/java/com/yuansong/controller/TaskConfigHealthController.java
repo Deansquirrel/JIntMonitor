@@ -17,27 +17,27 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.yuansong.common.CommonFun;
-import com.yuansong.pojo.DingMessageConfig;
+import com.yuansong.pojo.HealthTaskConfig;
 import com.yuansong.service.ConfigService;
 
 @Controller
-@RequestMapping(value="/MessageSender/Ding")
-public class MessageSenderController {
+@RequestMapping(value="/TaskConfig/Health")
+public class TaskConfigHealthController {
+	
+	private final Logger logger = Logger.getLogger(TaskConfigHealthController.class);
 
-	private final Logger logger = Logger.getLogger(MessageSenderController.class);
-
-	private Gson mGson = new Gson();	
+	private Gson mGson = new Gson();
 	
 	@Autowired
-	private ConfigService<DingMessageConfig> dingMessageConfigService;
+	private ConfigService<HealthTaskConfig> healthTaskConfigService;
 	
 	@RequestMapping(value="/List")
-	public ModelAndView dingMessageConfigList(Map<String, Object> model) {
-		logger.debug("RootController dingMessageConfigList");
+	public ModelAndView healthTaskConfigList(Map<String, Object> model) {
+		logger.debug("RootController healthTaskConfigList");
 		
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		Map<String, String> listItem;
-		for(DingMessageConfig config : dingMessageConfigService.getSetConfigList()) {
+		for(HealthTaskConfig config : healthTaskConfigService.getSetConfigList()) {
 			listItem = new HashMap<String, String>();
 			listItem.put("id", config.getId());
 			listItem.put("title", config.getTitle());
@@ -47,51 +47,55 @@ public class MessageSenderController {
 		model.put("list", list);
 		
 		List<String> menuList = new ArrayList<String>();
-		menuList.add("MessageSender");
-		menuList.add("Ding");
+		menuList.add("TaskConfig");
+		menuList.add("Health");
 		menuList.add("List");
 		
 		model.put("menulist", mGson.toJson(menuList));
 		
-		return new ModelAndView("MessageSenderConfigDingList", model);
+		return new ModelAndView("TaskConfigHealthList", model);
 	}
 	
 	
 	@RequestMapping(value="/Add",method=RequestMethod.GET)
-	public ModelAndView dingMessageConfigAdd(Map<String, Object> model) {
-		logger.debug("RootController dingMessageConfigAdd");
+	public ModelAndView healthTaskConfigAdd(Map<String, Object> model) {
+		logger.debug("RootController healthTaskConfigAdd");
 		
 		List<String> menuList = new ArrayList<String>();
-		menuList.add("MessageSender");
-		menuList.add("Ding");
+		menuList.add("TaskConfig");
+		menuList.add("Health");
 		menuList.add("Add");
 		
 		model.put("menulist", mGson.toJson(menuList));
 		
-		return new ModelAndView("MessageSenderConfigDingAdd", model);
+		return new ModelAndView("TaskConfigHealthAdd", model);
 	}
 	
 	@Transactional
 	@RequestMapping(value="/Add",method=RequestMethod.POST)
-	public ModelAndView dingMessageConfigAddAction(
+	public ModelAndView healthTaskConfigAddAction(
 			@RequestParam("i-title") String title,
-			@RequestParam("i-remark") String remark,
-			@RequestParam("i-robottoken") String robotToken,
+			@RequestParam("i-remark") String remark,			
+			@RequestParam("i-corn") String corn,
+			@RequestParam("i-msgtitle") String msgTitle,
+			@RequestParam("i-msgcontent") String msgContent,
 			Map<String, Object> model) {
-		logger.debug("RootController dingMessageConfigAddAction");
+		logger.debug("RootController healthTaskConfigAddAction");
 		
-		DingMessageConfig config = new DingMessageConfig();
+		HealthTaskConfig config = new HealthTaskConfig();
 		config.setId(CommonFun.UUID());
 		config.setTitle(title.trim());
 		config.setRemark(remark.trim());
-		config.setRobotToken(robotToken);
+		config.setCorn(corn);
+		config.setMsgTitle(msgTitle);
+		config.setMsgContent(msgContent);
 		
 		Map<String,String> data = new HashMap<String,String>();
 		data.put("errCode", "0");
 		data.put("errDesc","success");
 		
 		try {
-			dingMessageConfigService.add(config);
+			healthTaskConfigService.add(config);
 		}catch(Exception ex) {
 			data.put("errCode", "-1");
 			data.put("errDesc",ex.getMessage());
@@ -105,13 +109,13 @@ public class MessageSenderController {
 	
 	@Transactional
 	@RequestMapping(value="/Del",method=RequestMethod.POST)
-	public ModelAndView webStateTaskConfigDelAction(
+	public ModelAndView healthTaskConfigDelAction(
 			@RequestParam("i-id") String id,
 			Map<String, Object> model) {
-		logger.debug("RootController webStateTaskConfigDelAction");
+		logger.debug("RootController healthTaskConfigDelAction");
 		logger.debug(id);
 		
-		DingMessageConfig config = new DingMessageConfig();
+		HealthTaskConfig config = new HealthTaskConfig();
 		config.setId(id);
 		
 		Map<String,String> data = new HashMap<String,String>();
@@ -119,7 +123,7 @@ public class MessageSenderController {
 		data.put("errDesc","success");
 		
 		try {
-			dingMessageConfigService.del(config);
+			healthTaskConfigService.del(config);
 		}catch(Exception ex) {
 			data.put("errCode", "-1");
 			data.put("errDesc",ex.getMessage());
@@ -132,25 +136,26 @@ public class MessageSenderController {
 	}
 	
 	@RequestMapping(value="/Detail/{taskId}")
-	public ModelAndView dingMessageConfigDetail(@PathVariable String taskId, Map<String, Object> model) {
-		logger.debug("RootController webStateTaskConfigDetail - " + taskId);
+	public ModelAndView healthTaskConfigDetail(@PathVariable String taskId, Map<String, Object> model) {
+		logger.debug("RootController healthTaskConfigDetail - " + taskId);
 		
 		if(!taskId.trim().equals("")) {
-			DingMessageConfig config = dingMessageConfigService.getConfig(taskId);
+			HealthTaskConfig config = healthTaskConfigService.getConfig(taskId);
 			if(config != null) {
 				model.put("config",config);
 			}
 		}
 		
 		List<String> menuList = new ArrayList<String>();
-		menuList.add("MessageSender");
-		menuList.add("Ding");
+		menuList.add("TaskConfig");
+		menuList.add("Health");
 		menuList.add("List");
 		menuList.add("Detail");
 		
 		model.put("menulist", mGson.toJson(menuList));
 		
-		return new ModelAndView("MessageSenderConfigDingDetail", model);
+		return new ModelAndView("TaskConfigHealthDetail", model);
 	}
 	
+
 }

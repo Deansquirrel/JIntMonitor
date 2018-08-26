@@ -19,7 +19,22 @@ public class ConfigServiceDingMessageImpl extends ConfigService<DingMessageConfi
 	private static final String SQL_GETLIST = ""
 			+ "SELECT [FId]" + 
 			"      ,[FRobotToken]" + 
+			"      ,[FRemark]" + 
+			"      ,[FTitle]" +
 			"  FROM [DingMessageSender]";
+	
+	private static final String SQL_ADD = ""
+			+ "INSERT INTO [DingMessageSender]" + 
+			"           ([FId]" + 
+			"           ,[FRobotToken]" + 
+			"           ,[FRemark]" + 
+			"           ,[FTitle])" + 
+			"     VALUES" + 
+			"           (? , ? , ? , ?)";
+	
+	private static final String SQL_DEL = ""
+			+ "DELETE FROM [DingMessageSender]" + 
+			"      WHERE [FId] = ?";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -30,13 +45,39 @@ public class ConfigServiceDingMessageImpl extends ConfigService<DingMessageConfi
 	}
 
 	@Override
-	protected List<DingMessageConfig> getSetConfigList() {
-		return jdbcTemplate.query(SQL_GETLIST, new DingMessageConfigRowMapper());
+	public List<DingMessageConfig> getSetConfigList() {
+		List<DingMessageConfig> list = null;
+		try {
+			list = jdbcTemplate.query(SQL_GETLIST, new DingMessageConfigRowMapper());
+		}catch(Exception ex) {
+			logger.error(ex.getMessage());
+		}
+		return list;
 	}
 	
 	
 	@Override
 	protected boolean checkConfig(DingMessageConfig config) {
 		return true;
+	}
+
+	@Override
+	public void add(DingMessageConfig config) {
+		try {
+			jdbcTemplate.update(SQL_ADD, new Object[] {
+					config.getId(),
+					config.getRobotToken(),
+					config.getRemark(),
+					config.getTitle()
+			});
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	protected String getSqlDel() {
+		return SQL_DEL;
 	}
 }

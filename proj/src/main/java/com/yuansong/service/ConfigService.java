@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
@@ -22,6 +24,9 @@ public abstract class ConfigService<T extends Config>{
 	
 	private Gson mGson = new Gson();
 	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
 	public ConfigService() {
 		logger.debug("ConfigServiceAbstractImpl Init");
 		configMap = new HashMap<String, T>();
@@ -34,12 +39,16 @@ public abstract class ConfigService<T extends Config>{
 	}
 		
 	public void refreshConfigList(RefreshCallBack<T> callBack) {
-		
 		List<T> list = getSetConfigList();
+		if(list == null) {
+			list = new ArrayList<T>();
+		}
 		
 		Map<String, T> newConfigMap = new HashMap<String, T>();
 		for(T config : list) {
-			newConfigMap.put(config.getId(), config);
+			if(checkConfig(config)) {
+				newConfigMap.put(config.getId(), config);				
+			}
 		}
 		
 		List<T> addList = new ArrayList<T>();
@@ -92,7 +101,7 @@ public abstract class ConfigService<T extends Config>{
 		return configMap;
 	}
 	
-	protected abstract List<T> getSetConfigList();
+	public abstract List<T> getSetConfigList();
 	
 	protected T getCurrentConfig(String key) {
 		return configMap.get(key);
@@ -103,5 +112,17 @@ public abstract class ConfigService<T extends Config>{
 	}
 	
 	protected abstract boolean checkConfig(T config);
+	
+	public abstract void add(T config);
+	
+	public void del(T config) {
+		try {
+			jdbcTemplate.update(getSqlDel(), new Object[] {config.getId()});
+		}catch(Exception ex){
+			throw ex;
+		}
+	}
+	
+	protected abstract String getSqlDel();
 
 }

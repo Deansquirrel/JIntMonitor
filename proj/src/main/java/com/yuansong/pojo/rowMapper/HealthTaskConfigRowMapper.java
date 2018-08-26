@@ -16,6 +16,8 @@ public class HealthTaskConfigRowMapper implements RowMapper<HealthTaskConfig> {
 		config.setCorn(rs.getString("FCorn"));
 		config.setMsgTitle(rs.getString("FMsgTitle"));
 		config.setMsgContent(rs.getString("FMsgContent"));
+		config.setTitle(rs.getString("FTitle"));
+		config.setRemark(rs.getString("FRemark"));
 		return config;
 	}
 

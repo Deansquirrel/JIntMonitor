@@ -14,6 +14,8 @@ public class DingMessageConfigRowMapper implements RowMapper<DingMessageConfig> 
 		DingMessageConfig config = new DingMessageConfig();
 		config.setId(rs.getString("FId"));
 		config.setRobotToken(rs.getString("FRobotToken"));
+		config.setTitle(rs.getString("FTitle"));
+		config.setRemark(rs.getString("FRemark"));
 		return config;
 	}
 

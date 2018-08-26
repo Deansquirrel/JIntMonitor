@@ -28,7 +28,32 @@ public class ConfigServiceIntTaskImpl extends ConfigService<IntTaskConfig>{
 			"      ,[FCheckMin]" + 
 			"      ,[FMsgTitle]" + 
 			"      ,[FMsgContent]" + 
+			"      ,[FRemark]" + 
+			"      ,[FTitle]" +
 			"  FROM [IntTaskConfig]";
+	
+	private static final String SQL_ADD = ""
+			+ "INSERT INTO [JMonitor].[dbo].[IntTaskConfig]" + 
+			"           ([FId]" + 
+			"           ,[FServer]" + 
+			"           ,[FPort]" + 
+			"           ,[FDbName]" + 
+			"           ,[FDbUser]" + 
+			"           ,[FDbPwd]" + 
+			"           ,[FSearch]" + 
+			"           ,[FCorn]" + 
+			"           ,[FCheckMax]" + 
+			"           ,[FCheckMin]" + 
+			"           ,[FMsgTitle]" + 
+			"           ,[FMsgContent]" + 
+			"           ,[FRemark]" + 
+			"           ,[FTitle])" + 
+			"     VALUES" + 
+			"           (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	
+	private static final String SQL_DEL = ""
+			+ "DELETE FROM [IntTaskConfig]" + 
+			"      WHERE [FId] = ?";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -39,13 +64,49 @@ public class ConfigServiceIntTaskImpl extends ConfigService<IntTaskConfig>{
 	}
 	
 	@Override
-	protected List<IntTaskConfig> getSetConfigList() {
-		return jdbcTemplate.query(SQL_GETLIST, new IntTaskConfigRowMapper());
+	public List<IntTaskConfig> getSetConfigList() {
+		List<IntTaskConfig> list = null;
+		try{
+			list = jdbcTemplate.query(SQL_GETLIST, new IntTaskConfigRowMapper());
+		}catch(Exception ex) {
+			logger.error(ex.getMessage());
+		}
+		return list;
 	}
 
 	@Override
 	protected boolean checkConfig(IntTaskConfig config) {
 		return true;
+	}
+
+	@Override
+	public void add(IntTaskConfig config) {
+		try {
+			jdbcTemplate.update(SQL_ADD, new Object[] {
+					config.getId(),
+					config.getServer(),
+					config.getPort(),
+					config.getDbName(),
+					config.getUser(),
+					config.getPwd(),
+					config.getSearch(),
+					config.getCorn(),
+					config.getCheckMax(),
+					config.getCheckMin(),
+					config.getMsgTitle(),
+					config.getMsgContent(),
+					config.getRemark(),
+					config.getTitle()
+			});
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	protected String getSqlDel() {
+		return SQL_DEL;
 	}
 
 //	@Override
