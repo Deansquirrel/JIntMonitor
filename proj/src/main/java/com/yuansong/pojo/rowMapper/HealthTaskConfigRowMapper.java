@@ -13,7 +13,7 @@ public class HealthTaskConfigRowMapper implements RowMapper<HealthTaskConfig> {
 	public HealthTaskConfig mapRow(ResultSet rs, int rowNum) throws SQLException {
 		HealthTaskConfig config = new HealthTaskConfig();
 		config.setId(rs.getString("FId"));
-		config.setCorn(rs.getString("FCorn"));
+		config.setCron(rs.getString("FCron"));
 		config.setMsgTitle(rs.getString("FMsgTitle"));
 		config.setMsgContent(rs.getString("FMsgContent"));
 		config.setTitle(rs.getString("FTitle"));

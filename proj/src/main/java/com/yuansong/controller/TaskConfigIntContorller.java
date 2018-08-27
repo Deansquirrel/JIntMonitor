@@ -19,6 +19,9 @@ import com.google.gson.Gson;
 import com.yuansong.common.CommonFun;
 import com.yuansong.pojo.IntTaskConfig;
 import com.yuansong.service.ConfigService;
+import com.yuansong.service.MessageSenderManagerService;
+import com.yuansong.service.TaskWorkerManagerService;
+import com.yuansong.taskjob.TaskWorkerInt;
 
 @Controller
 @RequestMapping(value="/TaskConfig/Int")
@@ -30,6 +33,12 @@ public class TaskConfigIntContorller {
 	
 	@Autowired
 	private ConfigService<IntTaskConfig> intTaskConfigService;
+	
+	@Autowired
+	private TaskWorkerManagerService taskWorkerManagerService;
+	
+	@Autowired
+	private MessageSenderManagerService messageSenderManagerService;
 	
 	@RequestMapping(value="/List")
 	public ModelAndView intTaskConfigList(Map<String, Object> model) {
@@ -81,7 +90,7 @@ public class TaskConfigIntContorller {
 			@RequestParam("i-user") String user,
 			@RequestParam("i-pwd") String pwd,
 			@RequestParam("i-search") String search,
-			@RequestParam("i-corn") String corn,
+			@RequestParam("i-cron") String cron,
 			@RequestParam("i-checkmax") String checkMax,
 			@RequestParam("i-checkmin") String checkMin,
 			@RequestParam("i-msgtitle") String msgTitle,
@@ -99,7 +108,7 @@ public class TaskConfigIntContorller {
 		config.setUser(user.trim());
 		config.setPwd(pwd.trim());
 		config.setSearch(search.trim());
-		config.setCorn(corn);
+		config.setCron(cron);
 		config.setCheckMax(Integer.valueOf(checkMax.trim()));
 		config.setCheckMin(Integer.valueOf(checkMin.trim()));
 		config.setMsgTitle(msgTitle);
@@ -110,6 +119,7 @@ public class TaskConfigIntContorller {
 		data.put("errDesc","success");
 		
 		try {
+			taskWorkerManagerService.addTask(config.getId(), new TaskWorkerInt(config, messageSenderManagerService.getMessageSenderList()), config.getCron());
 			intTaskConfigService.add(config);
 		}catch(Exception ex) {
 			data.put("errCode", "-1");

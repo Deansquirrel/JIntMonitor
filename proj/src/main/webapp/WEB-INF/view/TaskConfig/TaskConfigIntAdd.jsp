@@ -56,9 +56,9 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Corn</label>
+				<label class="col-sm-2 control-label">Cron</label>
 				<div class="col-sm-10">
-					<input id="i-corn" type="text" class="form-control" name="i-corn"  placeholder="Corn">
+					<input id="i-cron" type="text" class="form-control" name="i-cron"  placeholder="Cron">
 				</div>
 			</div>
 			<div class="form-group">
@@ -171,7 +171,7 @@
 		$("#i-user").val("");
 		$("#i-pwd").val("");
 		$("#i-search").val("");
-		$("#i-corn").val("");
+		$("#i-cron").val("");
 		$("#i-checkmax").val("");
 		$("#i-checkmin").val("");
 		$("#i-msgtitle").val("");

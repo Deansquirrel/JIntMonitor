@@ -65,6 +65,12 @@
 		<div id="sidebar-nav" class="sidebar">
 			<nav>
 				<ul class="nav" id="sidebar-nav-menu">
+					<c:url var="urlStr" value="/" />
+					<li class="panel">
+						<a href="${urlStr }">
+							<span class="title">Current</span>
+						</a>
+					</li>
 					<li class="menu-group">TaskConfig</li>
 					<li class="panel">
 						<!--

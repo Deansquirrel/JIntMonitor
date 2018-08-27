@@ -18,7 +18,7 @@ public class ConfigServiceWebStateImpl extends ConfigService<WebStateTaskConfig>
 	private static final String SQL_GETLIST = ""
 			+ "SELECT [FId]" + 
 			"      ,[FUrl]" + 
-			"      ,[FCorn]" + 
+			"      ,[FCron]" + 
 			"      ,[FMsgTitle]" + 
 			"      ,[FMsgContent]" +
 			"      ,[FRemark]" + 
@@ -29,7 +29,7 @@ public class ConfigServiceWebStateImpl extends ConfigService<WebStateTaskConfig>
 			+ "INSERT INTO [WebStateTaskConfig]" + 
 			"           ([FId]" + 
 			"           ,[FUrl]" + 
-			"           ,[FCorn]" + 
+			"           ,[FCron]" + 
 			"           ,[FMsgTitle]" + 
 			"           ,[FMsgContent]" + 
 			"           ,[FRemark]" + 
@@ -71,7 +71,7 @@ public class ConfigServiceWebStateImpl extends ConfigService<WebStateTaskConfig>
 			jdbcTemplate.update(SQL_ADD, new Object[] {
 					config.getId(),
 					config.getUrl(),
-					config.getCorn(),
+					config.getCron(),
 					config.getMsgTitle(),
 					config.getMsgContent(),
 					config.getRemark(),
@@ -87,28 +87,5 @@ public class ConfigServiceWebStateImpl extends ConfigService<WebStateTaskConfig>
 	protected String getSqlDel() {
 		return SQL_DEL;
 	}
-
-
-
-//	@Override
-//	protected boolean checkConfig(String fileName, WebStateTaskConfig config) {
-//		if(config == null) {
-//			logger.error("WebStateTaskConfig is null.【" + fileName + "】");
-//			return false;
-//		}
-//		if(config.getUrl().equals("")) {
-//			logger.error("WebStateTaskConfig url can not be null.【" + fileName + "】");
-//			return false;
-//		}
-//		if(config.getCorn().equals("")) {
-//			logger.error("WebStateTaskConfig corn can not be null.【" + fileName + "】");
-//			return false;
-//		}
-//		if(config.getMsgContent().equals("")) {
-//			logger.error("WebStateTaskConfig msgContent can not be null.【" + fileName + "】");
-//			return false;
-//		}
-//		return true;
-//	}
 
 }

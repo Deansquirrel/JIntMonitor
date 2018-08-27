@@ -14,7 +14,7 @@ public class WebStateTaskConfigRowMapper implements RowMapper<WebStateTaskConfig
 		WebStateTaskConfig config = new WebStateTaskConfig();
 		config.setId(rs.getString("FId"));
 		config.setUrl(rs.getString("FUrl"));
-		config.setCorn(rs.getString("FCorn"));
+		config.setCron(rs.getString("FCron"));
 		config.setMsgTitle(rs.getString("FMsgTitle"));
 		config.setMsgContent(rs.getString("FMsgContent"));
 		config.setTitle(rs.getString("FTitle"));
