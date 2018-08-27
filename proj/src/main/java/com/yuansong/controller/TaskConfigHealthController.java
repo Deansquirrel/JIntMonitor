@@ -1,0 +1,161 @@
+package com.yuansong.controller;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
+import com.yuansong.common.CommonFun;
+import com.yuansong.pojo.HealthTaskConfig;
+import com.yuansong.service.ConfigService;
+
+@Controller
+@RequestMapping(value="/TaskConfig/Health")
+public class TaskConfigHealthController {
+	
+	private final Logger logger = Logger.getLogger(TaskConfigHealthController.class);
+
+	private Gson mGson = new Gson();
+	
+	@Autowired
+	private ConfigService<HealthTaskConfig> healthTaskConfigService;
+	
+	@RequestMapping(value="/List")
+	public ModelAndView healthTaskConfigList(Map<String, Object> model) {
+		logger.debug("RootController healthTaskConfigList");
+		
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		Map<String, String> listItem;
+		for(HealthTaskConfig config : healthTaskConfigService.getSetConfigList()) {
+			listItem = new HashMap<String, String>();
+			listItem.put("id", config.getId());
+			listItem.put("title", config.getTitle());
+			listItem.put("remark", config.getRemark());
+			list.add(listItem);
+		}
+		model.put("list", list);
+		
+		List<String> menuList = new ArrayList<String>();
+		menuList.add("TaskConfig");
+		menuList.add("Health");
+		menuList.add("List");
+		
+		model.put("menulist", mGson.toJson(menuList));
+		
+		return new ModelAndView("TaskConfigHealthList", model);
+	}
+	
+	
+	@RequestMapping(value="/Add",method=RequestMethod.GET)
+	public ModelAndView healthTaskConfigAdd(Map<String, Object> model) {
+		logger.debug("RootController healthTaskConfigAdd");
+		
+		List<String> menuList = new ArrayList<String>();
+		menuList.add("TaskConfig");
+		menuList.add("Health");
+		menuList.add("Add");
+		
+		model.put("menulist", mGson.toJson(menuList));
+		
+		return new ModelAndView("TaskConfigHealthAdd", model);
+	}
+	
+	@Transactional
+	@RequestMapping(value="/Add",method=RequestMethod.POST)
+	public ModelAndView healthTaskConfigAddAction(
+			@RequestParam("i-title") String title,
+			@RequestParam("i-remark") String remark,			
+			@RequestParam("i-corn") String corn,
+			@RequestParam("i-msgtitle") String msgTitle,
+			@RequestParam("i-msgcontent") String msgContent,
+			Map<String, Object> model) {
+		logger.debug("RootController healthTaskConfigAddAction");
+		
+		HealthTaskConfig config = new HealthTaskConfig();
+		config.setId(CommonFun.UUID());
+		config.setTitle(title.trim());
+		config.setRemark(remark.trim());
+		config.setCorn(corn);
+		config.setMsgTitle(msgTitle);
+		config.setMsgContent(msgContent);
+		
+		Map<String,String> data = new HashMap<String,String>();
+		data.put("errCode", "0");
+		data.put("errDesc","success");
+		
+		try {
+			healthTaskConfigService.add(config);
+		}catch(Exception ex) {
+			data.put("errCode", "-1");
+			data.put("errDesc",ex.getMessage());
+			ex.printStackTrace();
+		}
+		
+		model.put("info", mGson.toJson(data));
+		
+		return new ModelAndView("responsePage", model);
+	}
+	
+	@Transactional
+	@RequestMapping(value="/Del",method=RequestMethod.POST)
+	public ModelAndView healthTaskConfigDelAction(
+			@RequestParam("i-id") String id,
+			Map<String, Object> model) {
+		logger.debug("RootController healthTaskConfigDelAction");
+		logger.debug(id);
+		
+		HealthTaskConfig config = new HealthTaskConfig();
+		config.setId(id);
+		
+		Map<String,String> data = new HashMap<String,String>();
+		data.put("errCode", "0");
+		data.put("errDesc","success");
+		
+		try {
+			healthTaskConfigService.del(config);
+		}catch(Exception ex) {
+			data.put("errCode", "-1");
+			data.put("errDesc",ex.getMessage());
+			ex.printStackTrace();
+		}
+		
+		model.put("info", mGson.toJson(data));
+		
+		return new ModelAndView("responsePage", model);
+	}
+	
+	@RequestMapping(value="/Detail/{taskId}")
+	public ModelAndView healthTaskConfigDetail(@PathVariable String taskId, Map<String, Object> model) {
+		logger.debug("RootController healthTaskConfigDetail - " + taskId);
+		
+		if(!taskId.trim().equals("")) {
+			HealthTaskConfig config = healthTaskConfigService.getConfig(taskId);
+			if(config != null) {
+				model.put("config",config);
+			}
+		}
+		
+		List<String> menuList = new ArrayList<String>();
+		menuList.add("TaskConfig");
+		menuList.add("Health");
+		menuList.add("List");
+		menuList.add("Detail");
+		
+		model.put("menulist", mGson.toJson(menuList));
+		
+		return new ModelAndView("TaskConfigHealthDetail", model);
+	}
+	
+
+}

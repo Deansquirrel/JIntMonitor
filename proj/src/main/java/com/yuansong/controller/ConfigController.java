@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.yuansong.pojo.DingMessageConfig;
-import com.yuansong.pojo.HealthConfig;
+import com.yuansong.pojo.HealthTaskConfig;
 import com.yuansong.pojo.IntTaskConfig;
 import com.yuansong.service.ConfigService;
 import com.yuansong.task.ConfigRefreshTask;
@@ -29,7 +29,7 @@ public class ConfigController {
 	private ConfigService<IntTaskConfig> taskConfigService;
 	
 	@Autowired
-	private ConfigService<HealthConfig> healthConfigService;
+	private ConfigService<HealthTaskConfig> healthConfigService;
 	
 	@Autowired
 	private ConfigService<DingMessageConfig> dingMessageConfigService;

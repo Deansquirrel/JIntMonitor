@@ -30,12 +30,11 @@ public class RootController {
 	@Autowired
 	TaskWorkerManagerServiceImpl taskManager;
 	
-//	@RequestMapping(value="/")
-//	public ModelAndView defaultPage(Map<String, Object> model){
-//		logger.debug("跳转到 rootPage");
-//		System.out.println("跳转到 rootPage");
-//		return new ModelAndView("redirect:/rootPage");
-//	}
+	@RequestMapping(value="/")
+	public ModelAndView defaultPage(Map<String, Object> model){
+		logger.debug("go to intTaskCongigList");
+		return new ModelAndView("redirect:/TaskConfig/Int/List");
+	}
 	
 	@RequestMapping(value="/PageNotFound")
 	public ModelAndView pageNotFound(Map<String, Object> model){
@@ -142,4 +141,5 @@ public class RootController {
 
 		return new ModelAndView("responsePage", model);
 	}
+	
 }
