@@ -17,7 +17,7 @@ public class ConfigServiceHealthImpl extends ConfigService<HealthTaskConfig> {
 	
 	private static final String SQL_GETLIST = ""
 			+ "SELECT [FId]" + 
-			"      ,[FCorn]" + 
+			"      ,[FCron]" + 
 			"      ,[FMsgTitle]" + 
 			"      ,[FMsgContent]" + 
 			"      ,[FRemark]" + 
@@ -27,7 +27,7 @@ public class ConfigServiceHealthImpl extends ConfigService<HealthTaskConfig> {
 	private static final String SQL_ADD = ""
 			+ "INSERT INTO [HealthTaskConfig]" + 
 			"           ([FId]" + 
-			"           ,[FCorn]" + 
+			"           ,[FCron]" + 
 			"           ,[FMsgTitle]" + 
 			"           ,[FMsgContent]" + 
 			"           ,[FRemark]" + 
@@ -68,7 +68,7 @@ public class ConfigServiceHealthImpl extends ConfigService<HealthTaskConfig> {
 		try {
 			jdbcTemplate.update(SQL_ADD, new Object[] {
 					config.getId(),
-					config.getCorn(),
+					config.getCron(),
 					config.getMsgTitle(),
 					config.getMsgContent(),
 					config.getRemark(),
@@ -84,19 +84,6 @@ public class ConfigServiceHealthImpl extends ConfigService<HealthTaskConfig> {
 	protected String getSqlDel() {
 		return SQL_DEL;
 	}
-
-//	@Override
-//	protected boolean checkConfig(String fileName, HealthTaskConfig config) {
-//		if(config.getCorn().equals("")) {
-//			logger.error("HealthConfig Corn can not be null.【" + fileName + "】");
-//			return false;
-//		}
-//		if(config.getMsgContent().equals("")) {
-//			logger.error("HealthConfig MsgContent can not be null.【" + fileName + "】");
-//			return false;
-//		}
-//		return true;
-//	}
 	
 	
 

@@ -19,6 +19,9 @@ import com.google.gson.Gson;
 import com.yuansong.common.CommonFun;
 import com.yuansong.pojo.WebStateTaskConfig;
 import com.yuansong.service.ConfigService;
+import com.yuansong.service.MessageSenderManagerService;
+import com.yuansong.service.TaskWorkerManagerService;
+import com.yuansong.taskjob.TaskWorkerWebState;
 
 @Controller
 @RequestMapping(value="/TaskConfig/WebState")
@@ -30,6 +33,12 @@ public class TaskConfigWebStateController {
 	
 	@Autowired
 	private ConfigService<WebStateTaskConfig> webStateTaskConfigService;
+	
+	@Autowired
+	private TaskWorkerManagerService taskWorkerManagerService;
+	
+	@Autowired
+	private MessageSenderManagerService messageSenderManagerService;
 	
 	@RequestMapping(value="/List")
 	public ModelAndView webStateTaskConfigList(Map<String, Object> model) {
@@ -77,7 +86,7 @@ public class TaskConfigWebStateController {
 			@RequestParam("i-title") String title,
 			@RequestParam("i-remark") String remark,
 			@RequestParam("i-url") String url,
-			@RequestParam("i-corn") String corn,
+			@RequestParam("i-cron") String cron,
 			@RequestParam("i-msgtitle") String msgTitle,
 			@RequestParam("i-msgcontent") String msgContent,
 			Map<String, Object> model) {
@@ -88,7 +97,7 @@ public class TaskConfigWebStateController {
 		config.setTitle(title.trim());
 		config.setRemark(remark.trim());
 		config.setUrl(url);
-		config.setCorn(corn);
+		config.setCron(cron);
 		config.setMsgTitle(msgTitle);
 		config.setMsgContent(msgContent);
 		
@@ -97,6 +106,7 @@ public class TaskConfigWebStateController {
 		data.put("errDesc","success");
 		
 		try {
+			taskWorkerManagerService.addTask(config.getId(),  new TaskWorkerWebState(config, messageSenderManagerService.getMessageSenderList()), config.getCron());
 			webStateTaskConfigService.add(config);
 		}catch(Exception ex) {
 			data.put("errCode", "-1");

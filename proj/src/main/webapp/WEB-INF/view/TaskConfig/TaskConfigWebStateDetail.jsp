@@ -34,8 +34,8 @@
 				<label class="col-sm-10 control-label" style="text-align: left;">${config.url }</label>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Corn</label>
-				<label class="col-sm-10 control-label" style="text-align: left;">${config.corn }</label>
+				<label class="col-sm-2 control-label">Cron</label>
+				<label class="col-sm-10 control-label" style="text-align: left;">${config.cron }</label>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">MsgTitle</label>

@@ -15,12 +15,16 @@
 		<put-attribute name="content" value="/layouts/error.jsp" />
 	</definition>
 	
-	
+	<definition name="template-base-curr" template="/layouts/base-curr.jsp" />
 	<definition name="template-base-int" template="/layouts/base-int.jsp" />
 	<definition name="template-base-health" template="/layouts/base-health.jsp" />
 	<definition name="template-base-webstate" template="/layouts/base-webstate.jsp" />
 	<definition name="template-base-ding" template="/layouts/base-ding.jsp" />
 	
+	<definition name="CurrList" extends="template-base-curr">
+		<put-attribute name="content" value="/WEB-INF/view/CurrList.jsp" />
+	</definition>
+
 	<definition name="TaskConfigIntList" extends="template-base-int">
 		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigIntList.jsp" />
 	</definition>

@@ -11,7 +11,7 @@
 	<div class="panel-heading">
 		<h3 class="panel-title">List</h3>
 		<div class="right">
-			<c:url var="urlStr" value="/TaskConfig/WebState/Add" />
+			<c:url var="urlStr" value="/TaskConfig/Health/Add" />
 			<a href="${urlStr }"><button id="btn-config-add" type="button" class="btn btn-primary">Add</button></a>
 		</div>
 	</div>

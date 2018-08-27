@@ -19,7 +19,7 @@ public class IntTaskConfigRowMapper implements RowMapper<IntTaskConfig> {
 		config.setUser(rs.getString("FDbUser"));
 		config.setPwd(rs.getString("FDbPwd"));
 		config.setSearch(rs.getString("FSearch"));
-		config.setCorn(rs.getString("FCorn"));
+		config.setCron(rs.getString("FCron"));
 		config.setCheckMax(rs.getInt("FCheckMax"));
 		config.setCheckMin(rs.getInt("FCheckMin"));;
 		config.setMsgTitle(rs.getString("FMsgTitle"));

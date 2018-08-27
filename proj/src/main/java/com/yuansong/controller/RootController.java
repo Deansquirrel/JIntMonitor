@@ -1,6 +1,8 @@
 package com.yuansong.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -14,6 +16,10 @@ import com.google.gson.Gson;
 import com.yuansong.common.CommonFun;
 import com.yuansong.common.HttpUtils;
 import com.yuansong.notify.DingMessageSender;
+import com.yuansong.pojo.HealthTaskConfig;
+import com.yuansong.pojo.IntTaskConfig;
+import com.yuansong.pojo.WebStateTaskConfig;
+import com.yuansong.service.ConfigService;
 import com.yuansong.service.TaskWorkerManagerServiceImpl;
 import com.yuansong.taskjob.TestJob;
 
@@ -30,10 +36,63 @@ public class RootController {
 	@Autowired
 	TaskWorkerManagerServiceImpl taskManager;
 	
+	@Autowired
+	private ConfigService<IntTaskConfig> intTaskConfigService;
+	
+	@Autowired
+	private ConfigService<HealthTaskConfig> healthTaskConfigService;
+	
+	@Autowired
+	private ConfigService<WebStateTaskConfig> webStateTaskConfigService;
+	
 	@RequestMapping(value="/")
 	public ModelAndView defaultPage(Map<String, Object> model){
-		logger.debug("go to intTaskCongigList");
-		return new ModelAndView("redirect:/TaskConfig/Int/List");
+		logger.debug("go to Current");
+		return new ModelAndView("redirect:/Current");
+	}
+	
+	@RequestMapping(value="/Current")
+	public ModelAndView currentPage(Map<String, Object> model){
+		logger.debug("RootController currentPage");
+		
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		Map<String, String> listItem;
+		
+		for(IntTaskConfig config : intTaskConfigService.getConfigMap().values()) {
+			listItem = new HashMap<String, String>();
+			listItem.put("id", config.getId());
+			listItem.put("title", config.getTitle());
+			listItem.put("remark", config.getRemark());
+			listItem.put("type", "Int");
+			listItem.put("configUrl", "/TaskConfig/Int/Detail/" + config.getId());
+			list.add(listItem);
+		}
+		for(HealthTaskConfig config : healthTaskConfigService.getConfigMap().values()) {
+			listItem = new HashMap<String, String>();
+			listItem.put("id", config.getId());
+			listItem.put("title", config.getTitle());
+			listItem.put("remark", config.getRemark());
+			listItem.put("type", "Health");
+			listItem.put("configUrl", "/TaskConfig/Health/Detail/" + config.getId());
+			list.add(listItem);
+		}
+		for(WebStateTaskConfig config : webStateTaskConfigService.getConfigMap().values()) {
+			listItem = new HashMap<String, String>();
+			listItem.put("id", config.getId());
+			listItem.put("title", config.getTitle());
+			listItem.put("remark", config.getRemark());
+			listItem.put("type", "WebState");
+			listItem.put("configUrl", "/TaskConfig/WebState/Detail/" + config.getId());
+			list.add(listItem);
+		}
+		model.put("list", list);
+		
+		List<String> menuList = new ArrayList<String>();
+		menuList.add("Current");
+		
+		model.put("menulist", mGson.toJson(menuList));
+		
+		return new ModelAndView("CurrList", model);
 	}
 	
 	@RequestMapping(value="/PageNotFound")

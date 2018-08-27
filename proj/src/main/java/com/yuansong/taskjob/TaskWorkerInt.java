@@ -42,7 +42,7 @@ public class TaskWorkerInt extends TaskWorkerAbstractImpl<IntTaskConfig> {
 		}catch (DataAccessException e){
 			logger.error(e.getMessage());
 			e.printStackTrace();
-			return e.getMessage();
+			return taskConfig.getMsgTitle() + "\n" + e.getMessage();
 		}finally {
 			try {
 				jdbcTemplate.getDataSource().getConnection().close();

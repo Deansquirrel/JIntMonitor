@@ -19,6 +19,9 @@ import com.google.gson.Gson;
 import com.yuansong.common.CommonFun;
 import com.yuansong.pojo.HealthTaskConfig;
 import com.yuansong.service.ConfigService;
+import com.yuansong.service.MessageSenderManagerService;
+import com.yuansong.service.TaskWorkerManagerService;
+import com.yuansong.taskjob.TaskWorkerHealth;
 
 @Controller
 @RequestMapping(value="/TaskConfig/Health")
@@ -30,6 +33,12 @@ public class TaskConfigHealthController {
 	
 	@Autowired
 	private ConfigService<HealthTaskConfig> healthTaskConfigService;
+	
+	@Autowired
+	private TaskWorkerManagerService taskWorkerManagerService;
+	
+	@Autowired
+	private MessageSenderManagerService messageSenderManagerService;
 	
 	@RequestMapping(value="/List")
 	public ModelAndView healthTaskConfigList(Map<String, Object> model) {
@@ -76,7 +85,7 @@ public class TaskConfigHealthController {
 	public ModelAndView healthTaskConfigAddAction(
 			@RequestParam("i-title") String title,
 			@RequestParam("i-remark") String remark,			
-			@RequestParam("i-corn") String corn,
+			@RequestParam("i-cron") String cron,
 			@RequestParam("i-msgtitle") String msgTitle,
 			@RequestParam("i-msgcontent") String msgContent,
 			Map<String, Object> model) {
@@ -86,7 +95,7 @@ public class TaskConfigHealthController {
 		config.setId(CommonFun.UUID());
 		config.setTitle(title.trim());
 		config.setRemark(remark.trim());
-		config.setCorn(corn);
+		config.setCron(cron);
 		config.setMsgTitle(msgTitle);
 		config.setMsgContent(msgContent);
 		
@@ -95,6 +104,7 @@ public class TaskConfigHealthController {
 		data.put("errDesc","success");
 		
 		try {
+			taskWorkerManagerService.addTask(config.getId(), new TaskWorkerHealth(config, messageSenderManagerService.getMessageSenderList()), config.getCron());
 			healthTaskConfigService.add(config);
 		}catch(Exception ex) {
 			data.put("errCode", "-1");

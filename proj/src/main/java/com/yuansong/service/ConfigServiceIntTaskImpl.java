@@ -23,7 +23,7 @@ public class ConfigServiceIntTaskImpl extends ConfigService<IntTaskConfig>{
 			"      ,[FDbUser]" + 
 			"      ,[FDbPwd]" + 
 			"      ,[FSearch]" + 
-			"      ,[FCorn]" + 
+			"      ,[FCron]" + 
 			"      ,[FCheckMax]" + 
 			"      ,[FCheckMin]" + 
 			"      ,[FMsgTitle]" + 
@@ -41,7 +41,7 @@ public class ConfigServiceIntTaskImpl extends ConfigService<IntTaskConfig>{
 			"           ,[FDbUser]" + 
 			"           ,[FDbPwd]" + 
 			"           ,[FSearch]" + 
-			"           ,[FCorn]" + 
+			"           ,[FCron]" + 
 			"           ,[FCheckMax]" + 
 			"           ,[FCheckMin]" + 
 			"           ,[FMsgTitle]" + 
@@ -90,7 +90,7 @@ public class ConfigServiceIntTaskImpl extends ConfigService<IntTaskConfig>{
 					config.getUser(),
 					config.getPwd(),
 					config.getSearch(),
-					config.getCorn(),
+					config.getCron(),
 					config.getCheckMax(),
 					config.getCheckMin(),
 					config.getMsgTitle(),
@@ -108,38 +108,5 @@ public class ConfigServiceIntTaskImpl extends ConfigService<IntTaskConfig>{
 	protected String getSqlDel() {
 		return SQL_DEL;
 	}
-
-//	@Override
-//	protected boolean checkConfig(String fileName, IntTaskConfig config) {
-//		if(config == null) {
-//			logger.error("IntTaskConfig is null.【" + fileName + "】");
-//			return false;
-//		}
-//		if(config.getServer().equals("")) {
-//			logger.error("IntTaskConfig Server can not be null.【" + fileName + "】");
-//			return false;
-//		}
-//		if(config.getDbName().equals("")) {
-//			logger.error("IntTaskConfig DbName can not be null.【" + fileName + "】");
-//			return false;
-//		}
-//		if(config.getUser().equals("")) {
-//			logger.error("IntTaskConfig User can not be null.【" + fileName + "】");
-//			return false;
-//		}
-//		if(config.getSearch().equals("")) {
-//			logger.error("IntTaskConfig Search can not be null.【" + fileName + "】");
-//			return false;
-//		}
-//		if(config.getCorn().equals("")) {
-//			logger.error("IntTaskConfig Corn can not be null.【" + fileName + "】");
-//			return false;
-//		}
-//		if(config.getMsgContent().equals("")) {
-//			logger.error("IntTaskConfig MsgContent can not be null.【" + fileName + "】");
-//			return false;
-//		}
-//		return true;
-//	}
 	
 }

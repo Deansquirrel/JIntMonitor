@@ -67,7 +67,7 @@
 				<ul class="nav" id="sidebar-nav-menu">
 					<c:url var="urlStr" value="/" />
 					<li class="panel">
-						<a href="${urlStr }">
+						<a href="${urlStr }" class="active" aria-expanded="true">
 							<span class="title">Current</span>
 						</a>
 					</li>
@@ -122,11 +122,11 @@
 
 					<li class="menu-group">MessageSender</li>
 					<li class="panel">
-						<a href="#ding" data-toggle="collapse" data-parent="#sidebar-nav-menu" class="active" aria-expanded="true">
+						<a href="#ding" data-toggle="collapse" data-parent="#sidebar-nav-menu" class="collapsed">
 							<span class="title">Ding</span>
 							<i class="icon-submenu ti-angle-left"></i>
 						</a>
-						<div id="ding" class="collapse in">
+						<div id="ding" class="collapse">
 							<ul class="submenu">
 								<c:url var="urlStr" value="/MessageSender/Ding/List" />
 								<li><a id="amessagedinglist" href="${urlStr }">List</a></li>
