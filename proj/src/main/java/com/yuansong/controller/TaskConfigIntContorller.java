@@ -39,32 +39,7 @@ public class TaskConfigIntContorller {
 	
 	@Autowired
 	private MessageSenderManagerService messageSenderManagerService;
-	
-	@RequestMapping(value="/WebTest")
-	public ModelAndView intTaskConfigWebTest(Map<String, Object> model) {
-		logger.debug("RootController intTaskConfigWebTest");
 		
-		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-		Map<String, String> listItem;
-		for(IntTaskConfig config : intTaskConfigService.getSetConfigList()) {
-			listItem = new HashMap<String, String>();
-			listItem.put("id", config.getId());
-			listItem.put("title", config.getTitle());
-			listItem.put("remark", config.getRemark());
-			list.add(listItem);
-		}
-		model.put("list", list);
-		
-		List<String> menuList = new ArrayList<String>();
-		menuList.add("TaskConfig");
-		menuList.add("Int");
-		menuList.add("List");
-		
-		model.put("menulist", mGson.toJson(menuList));
-		
-		return new ModelAndView("WebTest", model);
-	}
-	
 	@RequestMapping(value="/List")
 	public ModelAndView intTaskConfigList(Map<String, Object> model) {
 		logger.debug("RootController intTaskConfigList");
