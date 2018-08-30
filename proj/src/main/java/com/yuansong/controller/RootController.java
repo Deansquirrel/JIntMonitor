@@ -1,6 +1,7 @@
 package com.yuansong.controller;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,7 +99,6 @@ public class RootController {
 					listItem.put("configUrl", "/TaskConfig/WebState/Detail/" + config.getId());
 					list.add(listItem);
 				}
-				
 			});
 		}
 		
@@ -131,6 +131,23 @@ public class RootController {
 //			listItem.put("configUrl", "/TaskConfig/WebState/Detail/" + config.getId());
 //			list.add(listItem);
 //		}
+		
+		list.sort(new Comparator<Map<String, String>>(){
+			@Override
+			public int compare(Map<String, String> o1, Map<String, String> o2) {
+				String keyType1 = o1.get("type");
+				String keyType2 = o1.get("type");
+				if(keyType1.equals(keyType2)) {
+					String keyTitle1 = o1.get("title");
+					String keyTitle2 = o1.get("title");
+					return keyTitle1.compareTo(keyTitle2);
+				}
+				else {
+					return keyType1.compareTo(keyType2);
+				}
+			}
+		});
+		
 		model.put("list", list);
 		
 		List<String> menuList = new ArrayList<String>();
