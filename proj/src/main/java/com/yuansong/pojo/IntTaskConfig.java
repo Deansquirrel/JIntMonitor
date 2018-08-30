@@ -1,20 +1,16 @@
 package com.yuansong.pojo;
 
-public class IntTaskConfig {
+public class IntTaskConfig extends  TaskConfig{
 	
 	private String server;
+	private String port;
 	private String dbName;
 	private String user;
 	private String pwd;
 	private String search;
 	
-	private String corn;
-	
 	private int checkMax;
 	private int checkMin;
-	
-	private String msgTitle;
-	private String msgContent;
 
 	public String getServer() {
 		return server;
@@ -64,21 +60,7 @@ public class IntTaskConfig {
 		this.checkMin = checkMin;
 	}
 
-	public String getMsgTitle() {
-		return msgTitle;
-	}
 
-	public void setMsgTitle(String msgTitle) {
-		this.msgTitle = msgTitle;
-	}
-
-	public String getMsgContent() {
-		return msgContent;
-	}
-
-	public void setMsgContent(String msgContent) {
-		this.msgContent = msgContent;
-	}
 
 	public String getSearch() {
 		return search;
@@ -88,12 +70,11 @@ public class IntTaskConfig {
 		this.search = search;
 	}
 
-	public String getCorn() {
-		return corn;
+	public String getPort() {
+		return port;
 	}
 
-	public void setCorn(String corn) {
-		this.corn = corn;
+	public void setPort(String port) {
+		this.port = port;
 	}
-
 }

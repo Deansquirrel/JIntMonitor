@@ -6,6 +6,84 @@
 
 
 	<definition name="template-base" template="/layouts/base.jsp" />
+	
+	<definition name="responsePage" extends="template-base">
+		<put-attribute name="content" value="/layouts/content.jsp" />
+	</definition>
+	 
+	<definition name="errorPage" extends="template-base">
+		<put-attribute name="content" value="/layouts/error.jsp" />
+	</definition>
+	
+
+	<definition name="template-base-web" template="/layouts/base-web.jsp" />
+	
+	<definition name="CurrList" extends="template-base-web">
+		<put-attribute name="content" value="/WEB-INF/view/CurrList.jsp" />
+		<put-attribute name="menu" value="/layouts/menu.jsp" />
+	</definition>
+
+	<definition name="TaskConfigIntList" extends="template-base-web">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigIntList.jsp" />
+		<put-attribute name="menu" value="/layouts/menu.jsp" />
+	</definition>
+	
+	<definition name="TaskConfigIntAdd" extends="template-base-web">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigIntAdd.jsp" />
+		<put-attribute name="menu" value="/layouts/menu.jsp" />
+	</definition>
+	
+	<definition name="TaskConfigIntDetail" extends="template-base-web">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigIntDetail.jsp" />
+		<put-attribute name="menu" value="/layouts/menu.jsp" />
+	</definition>
+
+	<definition name="TaskConfigWebStateList" extends="template-base-web">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigWebStateList.jsp" />
+		<put-attribute name="menu" value="/layouts/menu.jsp" />
+	</definition>
+	
+	<definition name="TaskConfigWebStateAdd" extends="template-base-web">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigWebStateAdd.jsp" />
+		<put-attribute name="menu" value="/layouts/menu.jsp" />
+	</definition>
+	
+	<definition name="TaskConfigWebStateDetail" extends="template-base-web">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigWebStateDetail.jsp" />
+		<put-attribute name="menu" value="/layouts/menu.jsp" />
+	</definition>
+
+	<definition name="TaskConfigHealthList" extends="template-base-web">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigHealthList.jsp" />
+		<put-attribute name="menu" value="/layouts/menu.jsp" />
+	</definition>
+	
+	<definition name="TaskConfigHealthAdd" extends="template-base-web">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigHealthAdd.jsp" />
+		<put-attribute name="menu" value="/layouts/menu.jsp" />
+	</definition>
+	
+	<definition name="TaskConfigHealthDetail" extends="template-base-web">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigHealthDetail.jsp" />
+		<put-attribute name="menu" value="/layouts/menu.jsp" />
+	</definition>
+
+
+	<definition name="MessageSenderConfigDingList" extends="template-base-web">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/MessageSenderConfigDingList.jsp" />
+		<put-attribute name="menu" value="/layouts/menu.jsp" />
+	</definition>
+	
+	<definition name="MessageSenderConfigDingAdd" extends="template-base-web">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/MessageSenderConfigDingAdd.jsp" />
+		<put-attribute name="menu" value="/layouts/menu.jsp" />
+	</definition>
+	
+	<definition name="MessageSenderConfigDingDetail" extends="template-base-web">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/MessageSenderConfigDingDetail.jsp" />
+		<put-attribute name="menu" value="/layouts/menu.jsp" />
+	</definition>
+	
 	<!-- <definition name="content-base" template="/layouts/main.jsp" /> -->
 <!-- 	
 	<definition name="testPage" extends="template-base">
@@ -17,13 +95,7 @@
 	</definition>
 	 -->
 	 
-	 <definition name="responsePage" extends="template-base">
-		<put-attribute name="content" value="/layouts/content.jsp" />
-	</definition>
 	 
-	<definition name="errorPage" extends="template-base">
-		<put-attribute name="content" value="/layouts/error.jsp" />
-	</definition>
 	
 	<!-- 
 	<definition name="nav" extends="template-base">
