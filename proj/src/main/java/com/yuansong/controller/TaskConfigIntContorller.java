@@ -145,7 +145,15 @@ public class TaskConfigIntContorller {
 		
 		try {
 			taskWorkerManagerService.addTask(config.getId(), new TaskWorkerInt(config, messageSenderManagerService.getMessageSenderList()), config.getCron());
-			intTaskConfigService.add(config);
+			taskWorkerManagerService.cancelTask(config.getId());
+			String check = intTaskConfigService.checkConfig(config);
+			if(check.equals("")) {
+				intTaskConfigService.add(config);
+			}
+			else {
+				data.put("errCode", "1");
+				data.put("errDesc",check);
+			}
 		}catch(Exception ex) {
 			data.put("errCode", "-1");
 			data.put("errDesc",ex.getMessage());

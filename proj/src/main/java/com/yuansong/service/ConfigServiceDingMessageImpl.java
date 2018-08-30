@@ -57,8 +57,8 @@ public class ConfigServiceDingMessageImpl extends ConfigService<DingMessageConfi
 	
 	
 	@Override
-	protected boolean checkConfig(DingMessageConfig config) {
-		return true;
+	public String checkConfig(DingMessageConfig config) {
+		return "";
 	}
 
 	@Override

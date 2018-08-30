@@ -33,6 +33,12 @@ public class RootController {
 	
 	private String taskId;
 	
+	private interface FindTaskConfigResult{
+		public void getConfig(IntTaskConfig config);
+		public void getConfig(HealthTaskConfig config);
+		public void getConfig(WebStateTaskConfig config);
+	}
+	
 	@Autowired
 	TaskWorkerManagerServiceImpl taskManager;
 	
@@ -56,35 +62,75 @@ public class RootController {
 		logger.debug("RootController currentPage");
 		
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-		Map<String, String> listItem;
 		
-		for(IntTaskConfig config : intTaskConfigService.getConfigMap().values()) {
-			listItem = new HashMap<String, String>();
-			listItem.put("id", config.getId());
-			listItem.put("title", config.getTitle());
-			listItem.put("remark", config.getRemark());
-			listItem.put("type", "Int");
-			listItem.put("configUrl", "/TaskConfig/Int/Detail/" + config.getId());
-			list.add(listItem);
+		for(String key : taskManager.getTaskIdList()) {
+			getConfig(key, new FindTaskConfigResult() {
+
+				@Override
+				public void getConfig(IntTaskConfig config) {
+					Map<String, String> listItem = new HashMap<String, String>();
+					listItem.put("id", config.getId());
+					listItem.put("title", config.getTitle());
+					listItem.put("remark", config.getRemark());
+					listItem.put("type", "Int");
+					listItem.put("configUrl", "/TaskConfig/Int/Detail/" + config.getId());
+					list.add(listItem);
+				}
+
+				@Override
+				public void getConfig(HealthTaskConfig config) {
+					Map<String, String> listItem = new HashMap<String, String>();
+					listItem.put("id", config.getId());
+					listItem.put("title", config.getTitle());
+					listItem.put("remark", config.getRemark());
+					listItem.put("type", "Health");
+					listItem.put("configUrl", "/TaskConfig/Health/Detail/" + config.getId());
+					list.add(listItem);					
+				}
+
+				@Override
+				public void getConfig(WebStateTaskConfig config) {
+					Map<String, String> listItem = new HashMap<String, String>();
+					listItem.put("id", config.getId());
+					listItem.put("title", config.getTitle());
+					listItem.put("remark", config.getRemark());
+					listItem.put("type", "WebState");
+					listItem.put("configUrl", "/TaskConfig/WebState/Detail/" + config.getId());
+					list.add(listItem);
+				}
+				
+			});
 		}
-		for(HealthTaskConfig config : healthTaskConfigService.getConfigMap().values()) {
-			listItem = new HashMap<String, String>();
-			listItem.put("id", config.getId());
-			listItem.put("title", config.getTitle());
-			listItem.put("remark", config.getRemark());
-			listItem.put("type", "Health");
-			listItem.put("configUrl", "/TaskConfig/Health/Detail/" + config.getId());
-			list.add(listItem);
-		}
-		for(WebStateTaskConfig config : webStateTaskConfigService.getConfigMap().values()) {
-			listItem = new HashMap<String, String>();
-			listItem.put("id", config.getId());
-			listItem.put("title", config.getTitle());
-			listItem.put("remark", config.getRemark());
-			listItem.put("type", "WebState");
-			listItem.put("configUrl", "/TaskConfig/WebState/Detail/" + config.getId());
-			list.add(listItem);
-		}
+		
+		
+		
+//		for(IntTaskConfig config : intTaskConfigService.getConfigMap().values()) {
+//			listItem = new HashMap<String, String>();
+//			listItem.put("id", config.getId());
+//			listItem.put("title", config.getTitle());
+//			listItem.put("remark", config.getRemark());
+//			listItem.put("type", "Int");
+//			listItem.put("configUrl", "/TaskConfig/Int/Detail/" + config.getId());
+//			list.add(listItem);
+//		}
+//		for(HealthTaskConfig config : healthTaskConfigService.getConfigMap().values()) {
+//			listItem = new HashMap<String, String>();
+//			listItem.put("id", config.getId());
+//			listItem.put("title", config.getTitle());
+//			listItem.put("remark", config.getRemark());
+//			listItem.put("type", "Health");
+//			listItem.put("configUrl", "/TaskConfig/Health/Detail/" + config.getId());
+//			list.add(listItem);
+//		}
+//		for(WebStateTaskConfig config : webStateTaskConfigService.getConfigMap().values()) {
+//			listItem = new HashMap<String, String>();
+//			listItem.put("id", config.getId());
+//			listItem.put("title", config.getTitle());
+//			listItem.put("remark", config.getRemark());
+//			listItem.put("type", "WebState");
+//			listItem.put("configUrl", "/TaskConfig/WebState/Detail/" + config.getId());
+//			list.add(listItem);
+//		}
 		model.put("list", list);
 		
 		List<String> menuList = new ArrayList<String>();
@@ -199,6 +245,21 @@ public class RootController {
 		model.put("info", result);
 
 		return new ModelAndView("responsePage", model);
+	}
+	
+	private void getConfig(String configId, FindTaskConfigResult findTaskConfigResult) {
+		IntTaskConfig intTaskConfig = intTaskConfigService.getConfig(configId);
+		if(intTaskConfig != null) {
+			findTaskConfigResult.getConfig(intTaskConfig);
+		}
+		HealthTaskConfig healthTaskConfig = healthTaskConfigService.getConfig(configId);
+		if(healthTaskConfig != null) {
+			findTaskConfigResult.getConfig(healthTaskConfig);
+		}
+		WebStateTaskConfig webStateTaskConfig = webStateTaskConfigService.getConfig(configId);
+		if(webStateTaskConfig != null) {
+			findTaskConfigResult.getConfig(webStateTaskConfig);
+		}
 	}
 	
 }

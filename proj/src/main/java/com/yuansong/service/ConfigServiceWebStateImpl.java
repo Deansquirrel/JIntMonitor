@@ -61,8 +61,8 @@ public class ConfigServiceWebStateImpl extends ConfigService<WebStateTaskConfig>
 	}
 
 	@Override
-	protected boolean checkConfig(WebStateTaskConfig config) {
-		return true;
+	public String checkConfig(WebStateTaskConfig config) {
+		return "";
 	}
 
 	@Override
