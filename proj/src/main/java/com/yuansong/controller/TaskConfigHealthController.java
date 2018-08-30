@@ -158,7 +158,7 @@ public class TaskConfigHealthController {
 		logger.debug("RootController healthTaskConfigDetail - " + taskId);
 		
 		if(!taskId.trim().equals("")) {
-			HealthTaskConfig config = healthTaskConfigService.getConfig(taskId);
+			HealthTaskConfig config = healthTaskConfigService.getSetConfig(taskId);
 			if(config != null) {
 				model.put("config",config);
 			}

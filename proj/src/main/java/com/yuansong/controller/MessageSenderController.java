@@ -136,7 +136,7 @@ public class MessageSenderController {
 		logger.debug("RootController webStateTaskConfigDetail - " + taskId);
 		
 		if(!taskId.trim().equals("")) {
-			DingMessageConfig config = dingMessageConfigService.getConfig(taskId);
+			DingMessageConfig config = dingMessageConfigService.getSetConfig(taskId);
 			if(config != null) {
 				model.put("config",config);
 			}

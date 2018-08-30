@@ -8,7 +8,7 @@
 	<div class="panel-heading">
 		<h3 class="panel-title">Detail</h3>
 		<div class="right">
-			<c:url var="urlStr" value="/TaskConfig/WebState/List" />
+			<c:url var="urlStr" value="/TaskConfig/Health/List" />
 			<a href="${urlStr }"><button id="btn-config-add" type="button" class="btn btn-primary">Back To List</button></a>
 		</div>
 	</div>

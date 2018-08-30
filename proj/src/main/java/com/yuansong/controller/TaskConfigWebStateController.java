@@ -160,7 +160,7 @@ public class TaskConfigWebStateController {
 		logger.debug("RootController webStateTaskConfigDetail - " + taskId);
 		
 		if(!taskId.trim().equals("")) {
-			WebStateTaskConfig config = webStateTaskConfigService.getConfig(taskId);
+			WebStateTaskConfig config = webStateTaskConfigService.getSetConfig(taskId);
 			if(config != null) {
 				model.put("config",config);
 			}
