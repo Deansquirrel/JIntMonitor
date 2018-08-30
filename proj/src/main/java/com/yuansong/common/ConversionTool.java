@@ -7,6 +7,8 @@ package com.yuansong.common;
  */
 public class ConversionTool {
 	
+	private ConversionTool() {};
+	
 	/**
 	 * 转换 java.sql.Date 至 java.util.Date
 	 * @param java.sql.Date date

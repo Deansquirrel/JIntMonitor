@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
  */
 public class DateTool {
 	
+	private DateTool() {};
+	
 	/**
 	 * 按默认格式返回当前日期时间字符串
 	 * @return
