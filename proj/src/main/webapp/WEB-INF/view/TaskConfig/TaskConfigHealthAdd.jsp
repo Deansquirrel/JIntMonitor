@@ -126,8 +126,5 @@
 	}
 	pageInit();
 
-	setCurrMenuList("#ahealth");
-	setCurrMenuPanel("#health");
-	setCurrMenuNode("#ataskhealthadd");
 	updateMenuPath(${menulist });
 </script>

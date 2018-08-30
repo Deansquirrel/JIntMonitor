@@ -2,9 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../../../../layouts/library.jsp"%> 
 <script type="text/javascript">
-	setCurrMenuList("#ading");
-	setCurrMenuPanel("#ding");
-	setCurrMenuNode("#amessagedinglist");
 	updateMenuPath(${menulist });
 </script>   
 <div class="panel">

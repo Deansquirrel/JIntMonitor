@@ -112,8 +112,5 @@
 	}
 	pageInit();
 
-	setCurrMenuList("#ading");
-	setCurrMenuPanel("#ding");
-	setCurrMenuNode("#amessagedingadd");
 	updateMenuPath(${menulist });
 </script>

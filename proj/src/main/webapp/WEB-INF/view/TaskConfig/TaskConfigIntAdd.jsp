@@ -182,9 +182,5 @@
 	}
 	pageInit();
 
-
-	setCurrMenuList("#aint");
-	setCurrMenuPanel("#int");
-	setCurrMenuNode("#ataskintadd");
 	updateMenuPath(${menulist });
 </script>
