@@ -173,7 +173,7 @@ public class TaskConfigIntContorller {
 		logger.debug("RootController intTaskConfigDetail - " + taskId);
 		
 		if(!taskId.trim().equals("")) {
-			IntTaskConfig config = intTaskConfigService.getConfig(taskId);
+			IntTaskConfig config = intTaskConfigService.getSetConfig(taskId);
 			if(config != null) {
 				model.put("config",config);
 			}

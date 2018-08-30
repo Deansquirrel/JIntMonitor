@@ -1,7 +1,6 @@
 package com.yuansong.controller;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,12 +32,6 @@ public class RootController {
 	private final Gson mGson = new Gson();
 	
 	private String taskId;
-	
-	private interface FindTaskConfigResult{
-		public void getConfig(IntTaskConfig config);
-		public void getConfig(HealthTaskConfig config);
-		public void getConfig(WebStateTaskConfig config);
-	}
 	
 	@Autowired
 	TaskWorkerManagerServiceImpl taskManager;
@@ -209,21 +202,6 @@ public class RootController {
 		model.put("info", result);
 
 		return new ModelAndView("responsePage", model);
-	}
-	
-	private void getConfig(String configId, FindTaskConfigResult findTaskConfigResult) {
-		IntTaskConfig intTaskConfig = intTaskConfigService.getConfig(configId);
-		if(intTaskConfig != null) {
-			findTaskConfigResult.getConfig(intTaskConfig);
-		}
-		HealthTaskConfig healthTaskConfig = healthTaskConfigService.getConfig(configId);
-		if(healthTaskConfig != null) {
-			findTaskConfigResult.getConfig(healthTaskConfig);
-		}
-		WebStateTaskConfig webStateTaskConfig = webStateTaskConfigService.getConfig(configId);
-		if(webStateTaskConfig != null) {
-			findTaskConfigResult.getConfig(webStateTaskConfig);
-		}
 	}
 	
 }

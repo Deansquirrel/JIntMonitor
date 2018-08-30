@@ -103,6 +103,15 @@ public abstract class ConfigService<T extends Config>{
 	
 	public abstract List<T> getSetConfigList();
 	
+	public T getSetConfig(String id) {
+		for(T config : getSetConfigList()) {
+			if(config.getId().equals(id)) {
+				return config;
+			}
+		}
+		return null;
+	}
+	
 //	protected T getCurrentConfig(String key) {
 //		return configMap.get(key);
 //	}
