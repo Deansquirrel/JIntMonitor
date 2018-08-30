@@ -133,8 +133,5 @@
 	}
 	pageInit();
 
-	setCurrMenuList("#awebstate");
-	setCurrMenuPanel("#webstate");
-	setCurrMenuNode("#ataskwebstateadd");
 	updateMenuPath(${menulist });
 </script>
