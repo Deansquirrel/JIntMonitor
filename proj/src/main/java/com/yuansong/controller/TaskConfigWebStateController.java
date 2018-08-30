@@ -107,7 +107,15 @@ public class TaskConfigWebStateController {
 		
 		try {
 			taskWorkerManagerService.addTask(config.getId(),  new TaskWorkerWebState(config, messageSenderManagerService.getMessageSenderList()), config.getCron());
-			webStateTaskConfigService.add(config);
+			taskWorkerManagerService.cancelTask(config.getId());
+			String check = webStateTaskConfigService.checkConfig(config);
+			if(check.equals("")) {
+				webStateTaskConfigService.add(config);
+			}
+			else {
+				data.put("errCode", "1");
+				data.put("errDesc",check);
+			}
 		}catch(Exception ex) {
 			data.put("errCode", "-1");
 			data.put("errDesc",ex.getMessage());

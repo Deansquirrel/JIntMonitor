@@ -75,8 +75,8 @@ public class ConfigServiceIntTaskImpl extends ConfigService<IntTaskConfig>{
 	}
 
 	@Override
-	protected boolean checkConfig(IntTaskConfig config) {
-		return true;
+	public String checkConfig(IntTaskConfig config) {
+		return "";
 	}
 
 	@Override

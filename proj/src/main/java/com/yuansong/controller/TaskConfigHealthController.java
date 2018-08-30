@@ -105,7 +105,15 @@ public class TaskConfigHealthController {
 		
 		try {
 			taskWorkerManagerService.addTask(config.getId(), new TaskWorkerHealth(config, messageSenderManagerService.getMessageSenderList()), config.getCron());
-			healthTaskConfigService.add(config);
+			taskWorkerManagerService.cancelTask(config.getId());
+			String check = healthTaskConfigService.checkConfig(config);
+			if(check.equals("")) {
+				healthTaskConfigService.add(config);
+			}
+			else {
+				data.put("errCode", "1");
+				data.put("errDesc",check);
+			}
 		}catch(Exception ex) {
 			data.put("errCode", "-1");
 			data.put("errDesc",ex.getMessage());

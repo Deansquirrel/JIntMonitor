@@ -46,7 +46,7 @@ public abstract class ConfigService<T extends Config>{
 		
 		Map<String, T> newConfigMap = new HashMap<String, T>();
 		for(T config : list) {
-			if(checkConfig(config)) {
+			if(checkConfig(config).equals("")) {
 				newConfigMap.put(config.getId(), config);				
 			}
 		}
@@ -97,21 +97,21 @@ public abstract class ConfigService<T extends Config>{
 		}
 	}
 	
-	protected Map<String, T> getCurrentConfigMap(){
-		return configMap;
-	}
+//	protected Map<String, T> getCurrentConfigMap(){
+//		return configMap;
+//	}
 	
 	public abstract List<T> getSetConfigList();
 	
-	protected T getCurrentConfig(String key) {
-		return configMap.get(key);
-	}
+//	protected T getCurrentConfig(String key) {
+//		return configMap.get(key);
+//	}
 	
 	protected String getStrConfig(T config) {
 		return mGson.toJson(config);
 	}
 	
-	protected abstract boolean checkConfig(T config);
+	public abstract String checkConfig(T config);
 	
 	public abstract void add(T config);
 	

@@ -59,8 +59,8 @@ public class ConfigServiceHealthImpl extends ConfigService<HealthTaskConfig> {
 	}
 
 	@Override
-	protected boolean checkConfig(HealthTaskConfig config) {
-		return true;
+	public String checkConfig(HealthTaskConfig config) {
+		return "";
 	}
 
 	@Override
