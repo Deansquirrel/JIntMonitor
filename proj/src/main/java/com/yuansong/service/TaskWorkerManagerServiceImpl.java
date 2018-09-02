@@ -37,6 +37,7 @@ public class TaskWorkerManagerServiceImpl implements TaskWorkerManagerService {
 		ScheduledFuture<?> future = scheduler.schedule(taskWorker, new CronTrigger(cron));
 		list.put(taskId, future);
 		logger.info("Task " + taskId + "  is added");
+		logger.info(taskWorker.getConfigStr());
 	}
 	
 	@Override
