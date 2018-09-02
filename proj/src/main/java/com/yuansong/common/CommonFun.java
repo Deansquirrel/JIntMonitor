@@ -87,7 +87,7 @@ public class CommonFun {
             url = new URL(chinaz);
             try {
                 urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setConnectTimeout(5 * 1000);
+                urlConnection.setConnectTimeout(10 * 1000);
                 urlConnection.setReadTimeout(5 * 1000);
                 in = new BufferedReader( new InputStreamReader(urlConnection.getInputStream(),"UTF-8"));
             } catch (Exception e) {
