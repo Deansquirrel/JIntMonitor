@@ -1,8 +1,11 @@
 package com.yuansong.controller;
 
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -44,6 +47,15 @@ public class MessageSenderController {
 			listItem.put("remark", config.getRemark());
 			list.add(listItem);
 		}
+		list.sort(new Comparator<Map<String, String>>(){
+			@Override
+			public int compare(Map<String, String> o1, Map<String, String> o2) {
+				String str1 = o1.get("title") + o1.get("remark");
+				String str2 = o2.get("title") + o2.get("remark");
+				Collator instance = Collator.getInstance(Locale.CHINA);
+				return instance.compare(str1, str2);
+			}
+		});
 		model.put("list", list);
 		
 		List<String> menuList = new ArrayList<String>();
