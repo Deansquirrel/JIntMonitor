@@ -38,6 +38,24 @@
 		<put-attribute name="menu" value="/layouts/menu.jsp" />
 	</definition>
 
+
+
+	<definition name="TaskConfigJiraSearchList" extends="template-base-web">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigJiraSearchList.jsp" />
+		<put-attribute name="menu" value="/layouts/menu.jsp" />
+	</definition>
+	
+	<definition name="TaskConfigJiraSearchAdd" extends="template-base-web">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigJiraSearchAdd.jsp" />
+		<put-attribute name="menu" value="/layouts/menu.jsp" />
+	</definition>
+	
+	<definition name="TaskConfigJiraSearchDetail" extends="template-base-web">
+		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigJiraSearchDetail.jsp" />
+		<put-attribute name="menu" value="/layouts/menu.jsp" />
+	</definition>
+
+
 	<definition name="TaskConfigWebStateList" extends="template-base-web">
 		<put-attribute name="content" value="/WEB-INF/view/TaskConfig/TaskConfigWebStateList.jsp" />
 		<put-attribute name="menu" value="/layouts/menu.jsp" />
