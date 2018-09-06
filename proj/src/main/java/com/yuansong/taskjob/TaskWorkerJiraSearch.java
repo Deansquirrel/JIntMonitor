@@ -78,10 +78,6 @@ public class TaskWorkerJiraSearch extends TaskWorkerAbstractImpl<JiraSearchConfi
 			logger.debug(msg);
 		}
 		
-		if(msg.equals("")) {
-			msg = DateTool.getDateStr() + " - test";
-		}
-		
 		return msg;
 	}
 	
