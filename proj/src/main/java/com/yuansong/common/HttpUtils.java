@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.CookieHandler;
+import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -14,23 +17,30 @@ public class HttpUtils {
 	
 	private final Logger logger = Logger.getLogger(HttpUtils.class);
 	
-	private static final String CHARSET = "UTF-8";
-	
-	public String httpGet(String url) {
+	private static final String CHARSET = "utf-8";
+		
+	public String httpGet(String url, Map<String,String> header) {
 		StringBuffer buffer = new StringBuffer();  
         try {  
             URL realUrl = new URL(url);  
-            HttpURLConnection httpUrlConn = (HttpURLConnection) realUrl.openConnection();  
+            HttpURLConnection conn = (HttpURLConnection) realUrl.openConnection();  
    
-            httpUrlConn.setDoOutput(false);  
-            httpUrlConn.setDoInput(true);  
-            httpUrlConn.setUseCaches(false);  
+            conn.setDoOutput(false);  
+            conn.setDoInput(true);  
+            conn.setUseCaches(false);  
    
-            httpUrlConn.setRequestMethod("GET");  
-            httpUrlConn.connect();  
+            conn.setRequestMethod("GET");  
+            
+            if(header != null && header.size() > 0) {
+            	for(String key : header.keySet()) {
+            		conn.setRequestProperty(key, header.get(key));
+            	}
+            }
+            
+            conn.connect();  
    
             // 将返回的输入流转换成字符串  
-            InputStream inputStream = httpUrlConn.getInputStream();  
+            InputStream inputStream = conn.getInputStream();  
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, CHARSET);  
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);  
    
@@ -43,7 +53,7 @@ public class HttpUtils {
             // 释放资源  
             inputStream.close();  
             inputStream = null;  
-            httpUrlConn.disconnect();  
+            conn.disconnect();  
    
         } catch (Exception e) {  
         	logger.error("发送GET请求出现异常！" + e.getMessage());
@@ -52,11 +62,15 @@ public class HttpUtils {
         return buffer.toString(); 
 	}
 	
+	public String httpGet(String url) {
+		return this.httpGet(url, null);
+	}
+	
 //	private String httpGet(String url, Map<String, String> data) {
 //		return "";
 //	}
 	
-	public String httpPostJson(String url, String data) {
+	public String httpPostJson(String url, Map<String, String> header, String data) {
 		OutputStreamWriter out = null;
         BufferedReader in = null;
         String result = "";
@@ -74,10 +88,16 @@ public class HttpUtils {
             conn.setRequestProperty("user-agent",
                     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             conn.setRequestProperty("Content-Type", "application/json; charset=" + CHARSET);
+            
+            if(header != null && header.size() > 0) {
+            	for(String key : header.keySet()) {
+            		conn.setRequestProperty(key, header.get(key));
+            	}
+            }
              
             conn.connect();
              
-            out = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
+            out = new OutputStreamWriter(conn.getOutputStream(), CHARSET);
             out.write(data);
             out.flush();
             in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -105,4 +125,8 @@ public class HttpUtils {
         }
         return result;
 	}
+	
+	public String httpPostJson(String url, String data) {
+		return this.httpPostJson(url, null, data);
+	}	
 }
