@@ -30,5 +30,4 @@ public class DingMessageSender implements MessageSender {
 		httpUtils.httpPostJson(url, data);
 		
 	}
-
 }

@@ -11,6 +11,7 @@ import com.yuansong.notify.DingMessageSender;
 import com.yuansong.pojo.DingMessageConfig;
 import com.yuansong.pojo.HealthTaskConfig;
 import com.yuansong.pojo.IntTaskConfig;
+import com.yuansong.pojo.JiraSearchConfig;
 import com.yuansong.pojo.WebStateTaskConfig;
 import com.yuansong.service.ConfigService;
 import com.yuansong.service.ConfigService.RefreshCallBack;
@@ -18,6 +19,7 @@ import com.yuansong.service.MessageSenderManagerService;
 import com.yuansong.service.TaskWorkerManagerService;
 import com.yuansong.taskjob.TaskWorkerHealth;
 import com.yuansong.taskjob.TaskWorkerInt;
+import com.yuansong.taskjob.TaskWorkerJiraSearch;
 import com.yuansong.taskjob.TaskWorkerWebState;
 
 @Component
@@ -36,6 +38,9 @@ public class ConfigRefreshTask {
 	
 	@Autowired
 	private ConfigService<WebStateTaskConfig> webStateTaskConfigService;
+	
+	@Autowired
+	private ConfigService<JiraSearchConfig> jiraSearchConfigService;
 	
 	@Autowired
 	private MessageSenderManagerService messageSenderManagerService;
@@ -165,6 +170,31 @@ public class ConfigRefreshTask {
 				}
 			}
 			
+		});
+		
+		jiraSearchConfigService.refreshConfigList(new RefreshCallBack<JiraSearchConfig>() {
+
+			@Override
+			public void configAddList(List<JiraSearchConfig> list) {
+				for(JiraSearchConfig config : list) {
+					taskWorkerManagerService.addTask(config.getId(), new TaskWorkerJiraSearch(config, messageSenderManagerService.getMessageSenderList()), config.getCron());
+				}
+			}
+
+			@Override
+			public void configCancelList(List<JiraSearchConfig> list) {
+				for(JiraSearchConfig config : list) {
+					taskWorkerManagerService.cancelTask(config.getId());
+				}
+			}
+
+			@Override
+			public void configRefreshList(List<JiraSearchConfig> list) {
+				for(JiraSearchConfig config : list) {
+					taskWorkerManagerService.cancelTask(config.getId());
+					taskWorkerManagerService.addTask(config.getId(), new TaskWorkerJiraSearch(config, messageSenderManagerService.getMessageSenderList()), config.getCron());
+				}
+			}
 		});
 	}
 	

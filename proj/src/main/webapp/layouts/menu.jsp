@@ -6,6 +6,7 @@
 <c:if test="${fn:contains(menulist,'Int')}" var="cInt"></c:if>
 <c:if test="${fn:contains(menulist,'Health')}" var="cHealth"></c:if>
 <c:if test="${fn:contains(menulist,'WebState')}" var="cWebState"></c:if>
+<c:if test="${fn:contains(menulist,'JiraSearch')}" var="cJiraSearch"></c:if>
 <c:if test="${fn:contains(menulist,'Ding')}" var="cDing"></c:if>
 <c:if test="${fn:contains(menulist,'List')}" var="cList"></c:if>
 <c:if test="${fn:contains(menulist,'Add')}" var="cAdd"></c:if>
@@ -67,6 +68,40 @@
 							<li><a id="ataskintadd" href="${urlStr }">Add</a></li>
 						</c:if>
 
+					</ul>
+				</div>
+			</li>
+			<li class="panel">
+				<c:if test="${cJiraSearch }">
+					<a id="ajirasearch" href="#jirasearch" data-toggle="collapse" data-parent="#sidebar-nav-menu" class="active" aria-expanded="true">
+				</c:if>
+				<c:if test="${!cJiraSearch }">
+					<a id="ajirasearch" href="#jirasearch" data-toggle="collapse" data-parent="#sidebar-nav-menu" class="collapsed">
+				</c:if>
+					<span class="title">JiraSearch</span>
+					<i class="icon-submenu ti-angle-left"></i>
+				</a>
+				<c:if test="${cJiraSearch }">
+					<div id="jirasearch" class="collapse in">
+				</c:if>
+				<c:if test="${!cJiraSearch }">
+					<div id="jirasearch" class="collapse">
+				</c:if>
+					<ul class="submenu">
+						<c:url var="urlStr" value="/TaskConfig/JiraSearch/List" />
+						<c:if test="${cJiraSearch && cList }">
+							<li><a href="${urlStr }" class="active">List</a></li>
+						</c:if>
+						<c:if test="${!(cJiraSearch && cList) }">
+							<li><a href="${urlStr }">List</a></li>
+						</c:if>
+						<c:url var="urlStr" value="/TaskConfig/JiraSearch/Add" />
+						<c:if test="${cJiraSearch && cAdd }">
+							<li><a href="${urlStr }" class="active">Add</a></li>
+						</c:if>
+						<c:if test="${!(cJiraSearch && cAdd) }">
+							<li><a href="${urlStr }">Add</a></li>
+						</c:if>
 					</ul>
 				</div>
 			</li>
