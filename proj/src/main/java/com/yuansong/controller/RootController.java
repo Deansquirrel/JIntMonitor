@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.yuansong.pojo.HealthTaskConfig;
 import com.yuansong.pojo.IntTaskConfig;
+import com.yuansong.pojo.JiraSearchConfig;
 import com.yuansong.pojo.WebStateTaskConfig;
 import com.yuansong.service.ConfigService;
 import com.yuansong.service.TaskWorkerManagerServiceImpl;
@@ -40,6 +41,9 @@ public class RootController {
 	
 	@Autowired
 	private ConfigService<WebStateTaskConfig> webStateTaskConfigService;
+	
+	@Autowired
+	private ConfigService<JiraSearchConfig> jiraSearchConfigService;
 	
 	@RequestMapping(value="/")
 	public ModelAndView defaultPage(Map<String, Object> model){
@@ -81,6 +85,16 @@ public class RootController {
 			listItem.put("remark", config.getRemark());
 			listItem.put("type", "WebState");
 			listItem.put("configUrl", "/TaskConfig/WebState/Detail/" + config.getId());
+			list.add(listItem);
+		}
+		
+		for(JiraSearchConfig config : jiraSearchConfigService.getConfigMap().values()) {
+			listItem = new HashMap<String, String>();
+			listItem.put("id", config.getId());
+			listItem.put("title", config.getTitle());
+			listItem.put("remark", config.getRemark());
+			listItem.put("type", "JiraSearch");
+			listItem.put("configUrl", "/TaskConfig/JiraSearch/Detail/" + config.getId());
 			list.add(listItem);
 		}
 		
@@ -152,6 +166,16 @@ public class RootController {
 		logger.info("RootController testErrorPage");
 		
 		throw new RuntimeException("testErrorPage");
+	}
+	
+	
+	@RequestMapping(value="/Test")
+	public ModelAndView test(Map<String, Object> model){
+		logger.info("RootController Test");
+		
+		model.put("info", "Test");
+		
+		return new ModelAndView("responsePage", model);
 	}
 	
 }
