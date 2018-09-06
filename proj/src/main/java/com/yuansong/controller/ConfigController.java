@@ -90,12 +90,12 @@ public class ConfigController {
 		}
 		if(healthConfigService.getConfigKeyList().contains(configKey)) {
 			result = result + "HealthConfig" + "<br />";
-			result = result + mGson.toJson(healthConfigService.getConfig(configKey)) + "<br />";;
+			result = result + mGson.toJson(healthConfigService.getConfig(configKey)) + "<br />";
 		}
 		
 		if(dingMessageConfigService.getConfigKeyList().contains(configKey)) {
 			result = result + "DingMessageConfig" + "<br />";
-			result = result + mGson.toJson(dingMessageConfigService.getConfig(configKey)) + "<br />";;
+			result = result + mGson.toJson(dingMessageConfigService.getConfig(configKey)) + "<br />";
 		}
 		
 		if(result.equals("")) {
