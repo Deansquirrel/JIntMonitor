@@ -48,7 +48,7 @@ public class ConfigRefreshTask {
 	@Autowired
 	private TaskWorkerManagerService taskWorkerManagerService;
 	
-	@Scheduled(cron="0 0 0/1 * * ?")
+	@Scheduled(cron="0 0/1 * * * ?")
 	public synchronized void configReresh() {
 		/* 刷新Task前先刷新MessageSender */
 		logger.debug("Config Refresh");
