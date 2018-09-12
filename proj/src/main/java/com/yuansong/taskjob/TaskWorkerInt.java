@@ -1,6 +1,5 @@
 package com.yuansong.taskjob;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -30,34 +29,36 @@ public class TaskWorkerInt extends TaskWorkerAbstractImpl<IntTaskConfig> {
 			return "IntTaskConfig is null";
 		}
 		
-		JdbcTemplate jdbcTemplate = getJdbcTemplate();
+		JdbcTemplate jdbcTemplate = null;
 		Integer value;
 		
 		try {
-			 value = jdbcTemplate.queryForObject(taskConfig.getSearch(), Integer.class);
+			jdbcTemplate = getJdbcTemplate();
+			value = jdbcTemplate.queryForObject(taskConfig.getSearch(), Integer.class);
 		}catch (InvalidResultSetAccessException e){
-			logger.error(e.getMessage());
 			e.printStackTrace();
 			return e.getMessage();
 		}catch (DataAccessException e){
-			logger.error(e.getMessage());
 			e.printStackTrace();
 			return taskConfig.getMsgTitle() + "\n" + e.getMessage();
-		}finally {
-			try {
-				jdbcTemplate.getDataSource().getConnection().close();
-			} catch (SQLException e) {
-				logger.error(e.getMessage());
-				e.printStackTrace();
-			}
 		}
+//		finally {
+//			if(jdbcTemplate != null) {
+//				try {
+//					jdbcTemplate.getDataSource().getConnection().is
+//					jdbcTemplate.getDataSource().getConnection().close();
+//				} catch (SQLException e) {
+//					logger.error(e.getMessage());
+////					e.printStackTrace();
+//				}
+//			}
+//		}
 		
 		if(value <= getConfig().getCheckMin() || value >= taskConfig.getCheckMax()) {
 			String msg = taskConfig.getMsgContent();
 			msg = msg.replace("title", String.valueOf(value));
 			msg = msg.replace("Max", String.valueOf(taskConfig.getCheckMax()));
 			msg = msg.replace("Min", String.valueOf(taskConfig.getCheckMin()));
-			logger.info(msg);
 			if(!taskConfig.getMsgTitle().equals("")) {
 				msg = taskConfig.getMsgTitle() + "\n" + msg; 
 			}
