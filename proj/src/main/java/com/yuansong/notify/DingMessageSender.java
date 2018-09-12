@@ -39,6 +39,18 @@ public class DingMessageSender implements MessageSender {
 		objMsg.put("text", textContent);
 		
 		String result = httpUtils.httpPostJson(url, mGson.toJson(objMsg));
-		logger.debug(result);
+		DingMsgResult r = mGson.fromJson(result, DingMsgResult.class);
+		if(r == null) {
+			logger.debug(result);
+		}
+		else if(r.errcode != 0) {
+			logger.debug("errcode - " + String.valueOf(r.errcode));
+			logger.debug("errmsg - " + r.errmsg);
+		}
+	}
+		
+	private class DingMsgResult{
+		int errcode;
+		String errmsg;
 	}
 }
