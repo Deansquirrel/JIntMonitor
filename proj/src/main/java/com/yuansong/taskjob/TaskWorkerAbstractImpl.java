@@ -24,8 +24,8 @@ public abstract class TaskWorkerAbstractImpl<Config> implements TaskWorker {
 	@Override
 	public void run() {
 		String msg = check();
-		logger.debug(msg);
 		if(!msg.equals("")) {
+			logger.debug(msg);
 			for(MessageSender msd : list) {
 				msd.send(msg);
 			}
