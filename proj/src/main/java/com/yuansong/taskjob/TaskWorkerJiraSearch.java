@@ -169,7 +169,6 @@ public class TaskWorkerJiraSearch extends TaskWorkerAbstractImpl<JiraSearchConfi
 	        conn.setRequestProperty("Accept", "application/json");
 	        conn.setRequestProperty("Accept-Charset", "utf-8");
 	        conn.setRequestProperty("Accept-Language", "zh");
-	        conn.setRequestProperty("Accept-Language", "zh");
 	        
 	        conn.connect();
 	        out = new OutputStreamWriter(conn.getOutputStream(),"utf-8");
